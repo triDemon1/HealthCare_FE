@@ -1,0 +1,78 @@
+/* Khu vực kích hoạt hiển thị nút Toggle (Trong suốt, cố định ở góc) */
+.sidebar-toggle-trigger {
+  position: fixed;
+  top: 0; /* Đặt ở đỉnh màn hình */
+  left: 0; /* Đặt ở bên trái màn hình */
+  width: 60px; /* Chiều rộng của khu vực hover. Điều chỉnh kích thước này */
+  height: 120px; /* Chiều cao của khu vực hover. Điều chỉnh kích thước này để nó che phủ phần header và một chút bên dưới */
+  z-index: 1001; /* Đảm bảo nó nằm trên header */
+  /* background-color: rgba(255, 0, 0, 0.1); /* Bỏ comment dòng này để dễ debug vị trí và kích thước */
+  pointer-events: auto; /* Đảm bảo khu vực này nhận sự kiện chuột */
+}
+
+
+/* Nút Toggle (☰) - Ẩn mặc định */
+.toggle-btn {
+/* Đặt vị trí TƯƠNG ĐỐI với '.sidebar-toggle-trigger' */
+position: absolute; /* <-- Thay đổi thành absolute */
+top: 15px; /* Vị trí bên trong khu vực kích hoạt */
+left: 15px; /* Vị trí bên trong khu vực kích hoạt */
+
+background: #007bff;
+color: white;
+border: none;
+padding: 10px 15px;
+font-size: 20px;
+cursor: pointer;
+border-radius: 5px;
+
+opacity: 0; /* <-- Mặc định ẩn đi bằng opacity */
+visibility: hidden; /* <-- Mặc định ẩn đi bằng visibility (giúp trình đọc màn hình bỏ qua) */
+/* Thêm transition cho opacity và visibility để ẩn/hiện mượt mà */
+transition: opacity 0.3s ease, visibility 0.3s ease, background 0.3s ease;
+
+ /* Z-index không cần thiết ở đây khi nó là absolute bên trong trigger */
+}
+
+.toggle-btn:hover {
+background: #0056b3;
+/* Hiệu ứng hover này vẫn hoạt động khi nút hiển thị và chuột di qua chính nó */
+}
+
+/* Rule: Hiển thị nút toggle khi di chuột (hover) vào khu vực '.sidebar-toggle-trigger' */
+.sidebar-toggle-trigger:hover .toggle-btn {
+ opacity: 1; /* <-- Hiện nút */
+ visibility: visible; /* <-- Hiện nút */
+}
+
+
+/* Overlay mờ khi sidebar mở */
+.overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+background: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
+z-index: 1002; /* Overlay cần cao hơn trigger */
+transition: opacity 0.3s ease-in-out;
+}
+
+/* Sidebar mặc định ẩn */
+.sidebar {
+position: fixed;
+top: 0;
+left: -300px; /* Ẩn hoàn toàn bên ngoài màn hình */
+width: 250px;
+height: 100vh;
+background: white;
+box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+padding: 20px;
+transition: left 0.3s ease-in-out;
+z-index: 1003; /* Sidebar cần cao nhất */
+}
+
+/* Khi mở sidebar */
+.sidebar.open {
+left: 0; /* Trượt vào màn hình */
+}

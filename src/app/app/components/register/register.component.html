@@ -1,0 +1,40 @@
+<div class="register-container">
+    <h2>Đăng Ký Tài Khoản</h2>
+  
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Tên đăng nhập</label>
+        <input type="text" id="username" class="form-control" formControlName="username">
+        <small *ngIf="submitted && registerForm.controls['username'].invalid" class="error">
+          Tên đăng nhập phải có ít nhất 4 ký tự.
+        </small>
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="form-control" formControlName="email">
+        <small *ngIf="submitted && registerForm.controls['email'].invalid" class="error">
+          Email không hợp lệ.
+        </small>
+      </div>
+  
+      <div class="form-group">
+        <label for="password">Mật khẩu</label>
+        <input type="password" id="password" class="form-control" formControlName="password">
+        <small *ngIf="submitted && registerForm.controls['password'].invalid" class="error">
+          Mật khẩu phải có ít nhất 6 ký tự.
+        </small>
+      </div>
+  
+      <div class="form-group">
+        <label for="confirmPassword">Nhập lại mật khẩu</label>
+        <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword">
+        <small *ngIf="submitted && registerForm.controls['confirmPassword'].invalid" class="error">
+          Vui lòng nhập lại mật khẩu.
+        </small>
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Đăng ký</button>
+    </form>
+  </div>
+  

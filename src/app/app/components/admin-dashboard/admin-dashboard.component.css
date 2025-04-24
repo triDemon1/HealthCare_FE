@@ -1,0 +1,104 @@
+.admin-dashboard {
+    padding: 20px;
+}
+
+.admin-dashboard h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Phần thống kê */
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.stats .card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 23%;
+}
+
+.stats .card .icon {
+    font-size: 30px;
+    padding: 15px;
+    border-radius: 50%;
+    margin-right: 10px;
+    color: #fff;
+}
+
+.stats .card .orange { background: #FFA726; }
+.stats .card .green { background: #66BB6A; }
+.stats .card .red { background: #EF5350; }
+.stats .card .blue { background: #42A5F5; }
+
+.stats .card .info h3 { margin: 0; }
+.stats .card .info p { margin: 5px 0 0; color: gray; }
+
+/* Biểu đồ */
+.charts {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.charts canvas {
+    width: 45% !important;
+    height: 250px !important;
+}
+
+/* Danh sách yêu cầu */
+.requests {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.requests h3 {
+    margin-bottom: 15px;
+}
+
+.requests table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.requests th, .requests td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.requests th {
+    background: #f5f5f5;
+    text-align: left;
+}
+
+.requests td {
+    text-align: left;
+}
+
+/* Nút Duyệt & Từ chối */
+.requests .approve {
+    background: green;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.requests .reject {
+    background: red;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}

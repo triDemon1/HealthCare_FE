@@ -1,0 +1,21 @@
+<h2>Danh sách lịch hẹn</h2>
+<table border="1" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Họ tên</th>
+      <th>Loại chăm sóc</th>
+      <th>Ngày</th>
+      <th>Giờ</th>
+      <th>Ghi chú</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let a of appointments">
+      <td>{{ a.name }}</td>
+      <td>{{ a.careType }}</td>
+      <td>{{ a.date }}</td>
+      <td>{{ a.time }}</td>
+      <td>{{ a.note }}</td>
+    </tr>
+  </tbody>
+</table>

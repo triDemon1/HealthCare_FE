@@ -1,0 +1,87 @@
+<div class="service-detail-container container my-4">
+  <div class="row">
+      <div class="col-lg-12">
+          <h1 class="service-title">Dịch vụ Theo dõi Thuốc cho Người già</h1>
+          <p class="service-lead">
+              Đảm bảo người thân của bạn uống thuốc đúng giờ, đúng liều với sự hỗ trợ chuyên nghiệp và tận tâm.
+          </p>
+          <hr class="my-4">
+      </div>
+  </div>
+
+  <div class="row service-content-row">
+      <div class="col-lg-7 col-md-6">
+          <div class="service-text-block">
+              <h3>Tầm quan trọng của việc Theo dõi Thuốc</h3>
+              <p>
+                  Đối với người già, việc tuân thủ chặt chẽ phác đồ dùng thuốc là yếu tố then chốt để kiểm soát bệnh tật, ngăn ngừa biến chứng và nâng cao chất lượng cuộc sống. Tuy nhiên, việc ghi nhớ lịch trình phức tạp, phân loại thuốc và xử lý các vấn đề tiềm ẩn có thể là một thách thức lớn.
+              </p>
+              <p>
+                  Dịch vụ theo dõi thuốc tại nhà của chúng tôi được thiết kế để loại bỏ những lo lắng đó, cung cấp một giải pháp an toàn và đáng tin cậy.
+              </p>
+
+              <h3>Dịch vụ của chúng tôi bao gồm:</h3>
+              <ul class="service-feature-list">
+                  <li><i class="fas fa-check-circle me-2"></i> Kiểm tra và sắp xếp thuốc theo đúng đơn và lịch trình của bác sĩ.</li>
+                  <li><i class="fas fa-check-circle me-2"></i> Nhắc nhở và hỗ trợ người già uống thuốc đúng thời gian quy định.</li>
+                  <li><i class="fas fa-check-circle me-2"></i> Ghi chép nhật ký dùng thuốc chi tiết, theo dõi liều lượng và thời gian.</li>
+                  <li><i class="fas fa-check-circle me-2"></i> Quan sát các phản ứng phụ hoặc tương tác bất thường và thông báo kịp thời.</li>
+                  <li><i class="fas fa-check-circle me-2"></i> Hỗ trợ gia đình và liên lạc với bác sĩ khi cần thiết.</li>
+                  <li><i class="fas fa-check-circle me-2"></i> Tư vấn về cách bảo quản thuốc an toàn.</li>
+              </ul>
+
+              <p>
+                  Với đội ngũ điều dưỡng viên và người chăm sóc chuyên nghiệp, chúng tôi mang đến sự an tâm tuyệt đối cho bạn và gia đình.
+              </p>
+          </div>
+      </div>
+      <div class="col-lg-5 col-md-6">
+          <div class="service-image-block">
+              <img src="assets/images/elder_care_medication.jpg" alt="Người già đang dùng thuốc" class="img-fluid rounded shadow-sm">
+              <div class="service-cta-block text-center mt-4 p-3 bg-light rounded">
+                   <h4>Sẵn sàng tìm hiểu thêm?</h4>
+                   <p>Hãy liên hệ với chúng tôi để được tư vấn miễn phí về cách chúng tôi có thể hỗ trợ quản lý thuốc cho người thân của bạn.</p>
+                   <button class="btn btn-primary btn-lg">Liên hệ ngay</button>
+                   <br>
+                   <a routerLink="/booking" class="btn btn-outline-secondary mt-2">Hoặc Đặt lịch tư vấn</a>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <hr class="my-4">
+
+   <div class="row">
+       <div class="col-lg-12">
+           <h3>Lợi ích vượt trội</h3>
+           <p>Sử dụng dịch vụ theo dõi thuốc mang lại nhiều lợi ích cho cả người bệnh và gia đình:</p>
+           <ul class="row">
+               <li class="col-md-4"><i class="fas fa-shield-alt me-2 text-primary"></i> Đảm bảo an toàn và hiệu quả điều trị.</li>
+               <li class="col-md-4"><i class="fas fa-calendar-check me-2 text-primary"></i> Tuân thủ đúng lịch trình dùng thuốc.</li>
+               <li class="col-md-4"><i class="fas fa-heartbeat me-2 text-primary"></i> Cải thiện kết quả sức khỏe tổng thể.</li>
+                <li class="col-md-4"><i class="fas fa-comments me-2 text-primary"></i> Giao tiếp rõ ràng với bác sĩ và gia đình.</li>
+               <li class="col-md-4"><i class="fas fa-peace me-2 text-primary"></i> Giảm bớt căng thẳng và lo lắng cho người thân.</li>
+                <li class="col-md-4"><i class="fas fa-book-medical me-2 text-primary"></i> Nhật ký dùng thuốc chi tiết, đáng tin cậy.</li>
+           </ul>
+       </div>
+   </div>
+</div>
+<div class="medical-care-card">
+    <h3>Chăm sóc y tế tại nhà</h3>
+    <form (ngSubmit)="bookService()">
+      <label>Họ tên:</label>
+      <input type="text" [(ngModel)]="booking.name" name="name" required />
+  
+      <label>Ngày:</label>
+      <input type="date" [(ngModel)]="booking.date" name="date" required />
+  
+      <label>Giờ:</label>
+      <input type="time" [(ngModel)]="booking.time" name="time" required />
+  
+      <label>Ghi chú:</label>
+      <textarea [(ngModel)]="booking.note" name="note"></textarea>
+  
+      <button type="submit">Đặt lịch</button>
+    </form>
+  </div>
+  

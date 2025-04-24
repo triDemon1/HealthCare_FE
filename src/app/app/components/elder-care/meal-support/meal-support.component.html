@@ -1,0 +1,24 @@
+<div class="meal-support-card">
+  <h3>Hỗ trợ ăn uống, đi lại</h3>
+  <p>Dịch vụ giúp người già thực hiện các hoạt động hàng ngày dễ dàng hơn.</p>
+
+  <ul>
+    <li>Chuẩn bị bữa ăn, đảm bảo dinh dưỡng</li>
+    <li>Hỗ trợ ăn uống nếu người dùng gặp khó khăn</li>
+    <li>Giúp đỡ trong việc đi lại, di chuyển trong nhà</li>
+  </ul>
+
+  <button (click)="goToBooking()">Đặt lịch hỗ trợ</button>
+</div>
+<div class="chat-container">
+  <div class="chat-box">
+    <div *ngFor="let message of messages" [ngClass]="{'user': message.role === 'user', 'bot': message.role === 'bot'}">
+      {{ message.content }}
+    </div>
+  </div>
+
+  <div class="input-box">
+    <input [(ngModel)]="userInput" placeholder="Nhập câu hỏi về hỗ trợ ăn uống..." (keyup.enter)="sendMessage()" />
+    <button (click)="sendMessage()">Gửi</button>
+  </div>
+</div>

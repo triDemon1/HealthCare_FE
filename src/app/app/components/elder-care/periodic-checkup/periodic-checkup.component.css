@@ -1,0 +1,84 @@
+/* Use the same base styles as medication-tracking.component.css */
+/* Copy the styles or use shared styles */
+
+.service-detail-container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.service-title {
+    color: #0056b3;
+    margin-bottom: 10px;
+}
+
+.service-lead {
+    font-size: 1.25rem;
+    color: #555;
+}
+
+.service-text-block h3 {
+    color: #007bff;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.service-feature-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.service-feature-list li {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.service-feature-list i {
+    color: #28a745;
+}
+
+.service-image-block img {
+     margin-bottom: 15px;
+}
+
+ .service-cta-block {
+     border: 1px solid #dee2e6;
+ }
+
+ .service-cta-block h4 {
+     color: #333;
+     margin-bottom: 15px;
+ }
+
+  .service-detail-container .row ul {
+     list-style: none;
+     padding: 0;
+ }
+
+  .service-detail-container .row ul li {
+      margin-bottom: 10px;
+  }
+
+   .service-detail-container .row ul li i { /* Style for icons in the benefits list */
+       /* Use text-primary class from Bootstrap for color */
+  }
+
+
+/* Responsive adjustments (same as medication tracking) */
+@media (max-width: 767.98px) {
+    .service-content-row .col-md-6 {
+        margin-bottom: 20px;
+    }
+     .service-text-block,
+     .service-image-block {
+         padding: 0 15px;
+     }
+}
+
+@media (min-width: 768px) {
+     .service-text-block,
+     .service-image-block {
+         /* Optional padding */
+     }
+}

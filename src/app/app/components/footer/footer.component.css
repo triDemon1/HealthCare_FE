@@ -1,0 +1,265 @@
+.site-footer {
+    background-color: #f8f8f8; /* Màu nền chung nhẹ */
+}
+
+/* Phần trên cùng: Tiêu đề và CTA */
+.footer-top-cta {
+    background-color: #4a148c; /* Màu tím đậm */
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer-top-cta h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 2em;
+}
+
+.footer-top-cta p {
+    margin-bottom: 20px;
+    opacity: 0.9; /* Làm mờ nhẹ đoạn văn */
+}
+
+.cta-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Khoảng cách giữa 2 link */
+    flex-wrap: wrap; /* Cho phép xuống dòng */
+}
+
+.cta-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    display: flex; /* Để căn icon và text */
+    align-items: center;
+}
+
+.cta-links a i {
+    margin-right: 8px; /* Khoảng cách giữa icon và text */
+}
+
+.cta-links a:hover {
+    text-decoration: underline;
+}
+
+
+/* Phần giữa: Đăng ký email và Tải ứng dụng */
+.footer-middle {
+    padding: 40px 20px;
+    background-color: #eee; /* Màu nền khác biệt nhẹ */
+}
+
+.middle-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    gap: 40px; /* Khoảng cách giữa 2 phần */
+    flex-wrap: wrap; /* Cho phép xuống dòng */
+}
+
+.signup-section,
+.app-download-section {
+    flex: 1; /* Cho phép co giãn */
+    min-width: 300px; /* Chiều rộng tối thiểu */
+}
+
+.signup-section h3,
+.app-download-section h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 1.2em;
+}
+
+.signup-section p {
+     margin-bottom: 15px;
+     font-size: 0.9em;
+}
+
+.signup-section form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.signup-section input[type="email"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex-grow: 1; /* Cho phép input chiếm không gian */
+    min-width: 150px; /* Chiều rộng tối thiểu của input */
+}
+
+.signup-section button {
+    padding: 10px 20px;
+    background-color: #4a148c; /* Màu tím */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.signup-section button:hover {
+    background-color: #6a1b9a;
+}
+
+.social-icons a {
+    color: #333;
+    font-size: 1.5em;
+    margin-right: 15px;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: #4a148c;
+}
+
+.app-download-section {
+     display: flex;
+     flex-direction: column;
+     align-items: flex-start; /* Căn trái */
+}
+
+.app-logo {
+    max-width: 80px; /* Kích thước logo */
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.app-stores {
+    display: flex;
+    gap: 10px;
+}
+
+.app-stores img {
+    height: 40px; /* Chiều cao icon app store */
+    width: auto;
+}
+
+
+/* Phần dưới: Các liên kết cột */
+.footer-links {
+    padding: 40px 20px;
+    background-color: #f8f8f8; /* Màu nền */
+}
+
+.links-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Tạo lưới responsive */
+    gap: 30px; /* Khoảng cách giữa các cột và hàng */
+}
+
+.link-column h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1em;
+    text-transform: uppercase; /* Chữ in hoa */
+}
+
+.link-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.link-column li {
+    margin-bottom: 8px;
+}
+
+.link-column a {
+    color: #555;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.link-column a:hover {
+    text-decoration: underline;
+    color: #4a148c;
+}
+
+
+/* Phần cuối cùng: Thông tin bản quyền/liên kết nhỏ */
+.footer-bottom {
+    padding: 15px 20px;
+    background-color: #eee; /* Màu nền */
+    font-size: 0.8em;
+    color: #555;
+}
+
+.bottom-links-container {
+     max-width: 1200px;
+     margin: 0 auto;
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center; /* Căn giữa các liên kết */
+     gap: 15px 25px; /* Khoảng cách hàng và cột */
+}
+
+.bottom-links-container a {
+    color: #555;
+    text-decoration: none;
+}
+
+.bottom-links-container a:hover {
+    text-decoration: underline;
+}
+
+.bottom-links-container span {
+    display: flex;
+    align-items: center;
+}
+
+.bottom-links-container span i {
+     margin-right: 5px;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .cta-links {
+        flex-direction: column; /* Xếp CTA link thành cột */
+        gap: 15px;
+    }
+
+    .middle-container {
+        flex-direction: column; /* Xếp phần signup và app download thành cột */
+        gap: 30px;
+    }
+
+    .signup-section form {
+        flex-direction: column; /* Xếp input và button thành cột */
+    }
+
+     .app-download-section {
+        align-items: center; /* Căn giữa nội dung phần app download */
+     }
+
+     .footer-top-cta h2 {
+        font-size: 1.7em;
+     }
+}
+
+@media (max-width: 480px) {
+    .signup-section input[type="email"],
+    .signup-section button {
+        width: 100%; /* Input và button chiếm toàn bộ chiều rộng */
+    }
+
+    .social-icons {
+        text-align: center; /* Căn giữa icon social */
+    }
+}

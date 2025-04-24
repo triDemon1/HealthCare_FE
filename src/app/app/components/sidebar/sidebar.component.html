@@ -1,0 +1,30 @@
+<!-- <div class="sidebar-toggle-trigger">
+  <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+</div>
+
+
+<div class="overlay" *ngIf="isSidebarOpen" (click)="toggleSidebar()"></div> -->
+
+<div class="sidebar" [ngClass]="{'open': isSidebarOpen}">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <a routerLink="/booking">Đặt lịch tư vấn</a>
+    </li>
+
+    <li class="list-group-item">
+      <a routerLink="/appointments">Lịch hẹn của tôi</a>
+    </li>
+
+    <li class="list-group-item">
+      <a routerLink="/advice">Tư vấn sức khỏe</a>
+    </li>
+
+    <li class="list-group-item">
+      <a routerLink="/question">Gửi câu hỏi</a>
+    </li>
+
+    <li class="list-group-item">
+      <a href="#">⚙️ Cài đặt</a>
+    </li>
+  </ul>
+</div>

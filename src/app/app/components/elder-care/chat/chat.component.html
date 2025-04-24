@@ -1,0 +1,54 @@
+<!-- <div class="chat-container container my-4">
+    <div class="chat-box">
+        <div class="chat-header bg-primary text-white p-3 rounded-top">
+            <h4>Chat với Bot Tư vấn</h4>
+        </div>
+
+        <div class="chat-messages" #chatMessages>
+            <div class="message bot-message">
+                <div class="message-bubble">
+                    Chào bạn! Tôi là bot tư vấn sức khỏe. Bạn có câu hỏi nào cho tôi không?
+                </div>
+            </div>
+
+        </div>
+
+        <div class="chat-input-area p-3 bg-light rounded-bottom">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Nhập tin nhắn của bạn..." [(ngModel)]="userInput"
+                    (keyup.enter)="sendMessage()">
+                <button class="btn btn-primary" (click)="sendMessage()">Gửi</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="chat-container container my-4">
+
+    <div class="chat-box">
+        <div class="chat-header bg-primary text-white p-3 rounded-top">
+            <h4>Chat với Bot Tư vấn</h4>
+        </div>
+
+        <div class="chat-messages" #chatMessages>
+            <div class="message bot-message">
+                <div class="message-bubble">
+                    Chào bạn! Tôi là bot tư vấn sức khỏe. Bạn có câu hỏi nào cho tôi không?
+                </div>
+            </div>
+            <div class="message bot-message">
+                <div *ngFor="let message of messages" class="message-bubble"
+                    [ngClass]="{'user': message.role === 'user', 'bot': message.role === 'bot'}">
+                    {{ message.content }}
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input-area p-3 bg-light rounded-bottom">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Nhập tin nhắn của bạn..." [(ngModel)]="userInput"
+                    (keyup.enter)="sendMessage()">
+                <button class="btn btn-primary" (click)="sendMessage()">Gửi</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main-layout {
+  display: flex;
+  flex: 1;
+}
+
+/* Mặc định khi sidebar mở */
+.content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 250px; /* Để tránh bị che bởi sidebar */
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* Khi sidebar đóng, nội dung mở rộng */
+.content.expanded {
+  margin-left: 60px;
+}
+.sidebar-overlay {
+  position: fixed; /* Giữ vị trí cố định trên màn hình */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Nền bán trong suốt (màu đen 50% opacity) */
+  z-index: 999; /* Đảm bảo overlay nằm trên nội dung chính nhưng dưới sidebar */
+  cursor: pointer; /* (Tùy chọn) Thay đổi con trỏ chuột khi rê vào overlay */
+}

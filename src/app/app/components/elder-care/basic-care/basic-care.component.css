@@ -1,0 +1,138 @@
+body {
+    font-family: sans-serif; /* Hoặc font chữ bạn muốn sử dụng */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #333;
+}
+
+.healthcare-professionals-section {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto; /* Căn giữa block */
+}
+
+.healthcare-professionals-section h1 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 2em;
+}
+
+.healthcare-professionals-section p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.healthcare-professionals-section h2 {
+    color: #333;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.topic-buttons {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các nút xuống dòng */
+    gap: 10px; /* Khoảng cách giữa các nút */
+    margin-bottom: 30px;
+}
+
+.topic-buttons button {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    background-color: #eee;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.topic-buttons button:hover {
+    background-color: #ddd;
+}
+
+.topic-buttons button.active {
+    background-color: #4a148c; /* Màu tím đậm */
+    color: #fff;
+    border-color: #4a148c;
+}
+
+.content-two-col {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+.image-col {
+    flex: 1; /* Chiếm phần không gian */
+    min-width: 300px; /* Chiều rộng tối thiểu */
+}
+
+.image-col img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px; /* Bo góc hình ảnh */
+}
+
+.grid-col {
+    flex: 2; /* Chiếm gấp đôi không gian so với cột ảnh */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Tạo lưới responsive */
+    gap: 15px; /* Khoảng cách giữa các item trong lưới */
+}
+
+.grid-item {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-size: 1em;
+    color: #555;
+}
+
+.bottom-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: #4a148c; /* Màu tím đậm */
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #6a1b9a; /* Màu tím nhạt hơn khi hover */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .content-two-col {
+        flex-direction: column; /* Xếp các cột thành hàng trên màn hình nhỏ */
+    }
+
+    .image-col, .grid-col {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .grid-col {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Điều chỉnh lưới trên màn hình nhỏ */
+    }
+
+    .healthcare-professionals-section h1 {
+        font-size: 1.7em;
+    }
+
+    .healthcare-professionals-section h2 {
+        font-size: 1.3em;
+    }
+}

@@ -1,0 +1,90 @@
+.chat-container {
+    display: flex; /* Sử dụng flexbox để căn chỉnh */
+    justify-content: center; /* Căn giữa ngang */
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.chat-box {
+    width: 100%; /* Chiếm toàn bộ chiều rộng container */
+    max-width: 700px; /* Chiều rộng tối đa cho khung chat */
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem; /* Bootstrap border-radius */
+    display: flex;
+    flex-direction: column; /* Sắp xếp header, messages, input theo cột dọc */
+    height: 70vh; /* Chiều cao cố định của khung chat (ví dụ 70% viewport height) */
+    min-height: 400px; /* Chiều cao tối thiểu */
+    overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài */
+}
+
+.chat-header {
+    flex-shrink: 0; /* Ngăn header co lại */
+}
+
+.chat-header h4 {
+    margin: 0; /* Loại bỏ margin mặc định của h4 */
+    color: white;
+}
+
+.chat-messages {
+    flex-grow: 1; /* Cho phép khu vực tin nhắn chiếm hết không gian còn lại */
+    overflow-y: auto; /* Tạo thanh cuộn khi tin nhắn tràn ra ngoài */
+    padding: 15px;
+    display: flex; /* Sử dụng flexbox cho các tin nhắn */
+    flex-direction: column; /* Sắp xếp tin nhắn theo cột dọc */
+}
+
+.chat-input-area {
+    flex-shrink: 0; /* Ngăn input area co lại */
+    /* p-3, bg-light, rounded-bottom, input-group, form-control, btn, btn-primary từ Bootstrap */
+}
+
+/* Style cho từng tin nhắn */
+.message {
+    display: flex; /* Sử dụng flexbox để căn chỉnh bubble và thời gian */
+    margin-bottom: 10px;
+}
+
+.message-bubble {
+    padding: 10px 15px;
+    border-radius: 1.25rem; /* Rounded corners */
+    max-width: 75%; /* Chiều rộng tối đa của bubble */
+    word-wrap: break-word; /* Xuống dòng khi văn bản quá dài */
+    font-size: 1rem;
+}
+
+.message-time {
+    font-size: 0.75rem;
+    color: #999;
+    margin-top: 5px;
+    margin-left: 8px;
+    margin-right: 8px;
+     align-self: flex-end; /* Căn chỉnh thời gian xuống dưới */
+}
+
+/* Style riêng cho tin nhắn của bot */
+.bot-message {
+    justify-content: flex-start; /* Căn tin nhắn sang trái */
+}
+
+.bot-message .message-bubble {
+    background-color: #e9e9eb; /* Light gray background */
+    color: #333;
+     border-bottom-left-radius: 0; /* Góc dưới bên trái vuông */
+}
+
+/* Style riêng cho tin nhắn của người dùng */
+.user-message {
+    justify-content: flex-end; /* Căn tin nhắn sang phải */
+}
+
+.user-message .message-bubble {
+    background-color: #007bff; /* Bootstrap primary blue */
+    color: white;
+     border-bottom-right-radius: 0; /* Góc dưới bên phải vuông */
+}
+
+/* Optional: Smooth scrolling */
+.chat-messages {
+  scroll-behavior: smooth;
+}

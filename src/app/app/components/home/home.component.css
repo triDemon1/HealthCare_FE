@@ -1,0 +1,299 @@
+.home {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.home h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.home-options {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.home-options a {
+  padding: 10px 20px;
+  background: #2196f3;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: background 0.3s ease;
+}
+
+.home-options a:hover {
+  background: #1769aa;
+}
+
+nav {
+  background-color: #411f82;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+}
+nav img {
+  height: 40px;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+nav ul li {
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.nav-actions button {
+  background-color: #f5b042;
+  border: none;
+  padding: 8px 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.levels-of-care {
+  text-align: center;
+  padding: 40px 20px;
+}
+.levels-of-care h2 {
+  font-size: 32px;
+  color: #333;
+}
+.levels-of-care p {
+  font-size: 18px;
+  color: #555;
+  max-width: 800px;
+  margin: 10px auto 40px auto;
+}
+.care-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 0 30px;
+}
+.card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  max-width: 250px;
+  overflow: hidden;
+  text-align: left;
+}
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.card h3 {
+  margin: 10px 15px 5px 15px;
+  font-size: 18px;
+  color: #222;
+}
+.card p {
+  margin: 0 15px 15px 15px;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Kiểu dáng tổng thể cho body */
+body {
+  font-family: Arial, sans-serif; /* Phông chữ cơ bản */
+  line-height: 1.6; /* Khoảng cách dòng */
+  margin: 0;
+  padding: 0;
+  color: #333; /* Màu chữ chính */
+  background-color: #f4f4f4; /* Màu nền nhạt */
+}
+
+/* Định dạng chung cho các section */
+section {
+  background-color: #fff; /* Nền trắng cho các khối nội dung */
+  margin: 20px; /* Khoảng cách giữa các khối */
+  padding: 20px; /* Đệm bên trong các khối */
+  border-radius: 8px; /* Bo góc nhẹ */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Đổ bóng nhẹ */
+}
+
+/* Tiêu đề */
+h1, h2, h3 {
+  color: #005a9c; /* Màu xanh dương cho tiêu đề (ví dụ) */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h2 {
+  border-bottom: 2px solid #eee; /* Đường gạch dưới nhẹ cho h2 */
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* Phần giới thiệu */
+.intro-content img {
+  max-width: 100%; /* Ảnh không vượt quá chiều rộng khối chứa */
+  height: auto;
+  display: block; /* Để căn giữa dễ hơn nếu cần */
+  margin: 15px auto; /* Căn giữa ảnh */
+}
+
+/* Các liên kết nhanh trong phần giới thiệu */
+.intro-content nav ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+.intro-content nav li {
+  display: inline-block; /* Hiển thị trên cùng một hàng */
+  margin: 0 10px;
+}
+
+/* Phần các điểm nổi bật */
+.key-features {
+  display: flex; /* Sử dụng flexbox để xếp các mục */
+  justify-content: space-around; /* Phân bố đều khoảng cách */
+  flex-wrap: wrap; /* Tự động xuống hàng nếu không đủ chỗ */
+  text-align: center;
+}
+.key-features div {
+  flex-basis: 30%; /* Chiều rộng cơ bản cho mỗi mục */
+  margin-bottom: 15px;
+}
+
+/* Phần tin tức */
+.in-the-news article {
+  margin-bottom: 15px;
+}
+
+/* Phần phản hồi */
+.testimonials blockquote {
+  border-left: 4px solid #ccc; /* Đường kẻ bên trái trích dẫn */
+  margin: 15px 0;
+  padding: 10px 20px;
+  background-color: #f9f9f9; /* Nền hơi khác cho trích dẫn */
+}
+.testimonials footer {
+  text-align: right;
+  font-style: italic;
+  color: #555;
+}
+
+/* Phần tìm địa điểm */
+.location-finder form {
+  text-align: center;
+}
+.location-finder label {
+  margin-right: 10px;
+}
+.location-finder input[type="text"] {
+  padding: 8px;
+  margin-right: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.location-finder button {
+  padding: 8px 15px;
+  background-color: #007bff; /* Màu nút ví dụ */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.location-finder button:hover {
+  background-color: #0056b3; /* Màu nút khi di chuột qua */
+}
+
+
+/* Kiểu dáng liên kết chung */
+a {
+  color: #007bff; /* Màu liên kết mặc định */
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline; /* Gạch chân khi di chuột qua */
+}
+roles-section {
+  padding: 40px 20px;
+  max-width: 900px; /* Giới hạn chiều rộng */
+  margin: 20px auto; /* Căn giữa block */
+}
+
+/* Style cho mỗi mục vai trò */
+.role-item {
+  display: flex; /* Sử dụng flexbox để xếp ảnh và nội dung ngang hàng */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px; /* Khoảng cách giữa các mục */
+  padding: 20px;
+  gap: 20px; /* Khoảng cách giữa ảnh và nội dung */
+  flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+}
+
+/* Đảo ngược thứ tự ảnh và nội dung cho các mục có class 'reverse' */
+.role-item.reverse {
+  flex-direction: row-reverse;
+}
+
+.role-image {
+  flex-shrink: 0; /* Ngăn ảnh bị co lại */
+  width: 120px; /* Kích thước ảnh */
+  height: 120px;
+  border-radius: 50%; /* Tạo hình tròn cho ảnh */
+  overflow: hidden; /* Cắt bỏ phần thừa */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho ảnh */
+}
+
+.role-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Đảm bảo ảnh phủ kín không gian */
+}
+
+.role-content {
+  flex-grow: 1; /* Cho phép nội dung chiếm không gian còn lại */
+}
+
+.role-content h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  color: #4a148c; /* Màu tím tương tự các bố cục trước */
+  font-size: 1.2em;
+}
+
+.role-content p {
+  margin: 0;
+  line-height: 1.5;
+  color: #555;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .role-item,
+  .role-item.reverse {
+      flex-direction: column; /* Xếp ảnh và nội dung thành cột trên màn hình nhỏ */
+      text-align: center; /* Căn giữa nội dung văn bản */
+      align-items: center; /* Căn giữa các mục con */
+  }
+
+  .role-image {
+      margin-bottom: 15px; /* Khoảng cách dưới ảnh khi xếp cột */
+  }
+
+  .role-content h3,
+  .role-content p {
+      text-align: center; /* Đảm bảo text cũng được căn giữa */
+  }
+}

@@ -1,0 +1,47 @@
+<h2>Đặt lịch chăm sóc</h2>
+<form (ngSubmit)="onSubmit()" #bookingForm="ngForm">
+
+  <label>Họ tên:</label>
+  <input type="text" name="name" [(ngModel)]="booking.name" required minlength="2">
+  <div *ngIf="bookingForm.submitted && bookingForm.controls['name']?.invalid" style="color:red">
+    Họ tên không được để trống và phải ít nhất 2 ký tự.
+  </div>
+
+  <br>
+
+  <label>Loại chăm sóc:</label>
+  <select name="careType" [(ngModel)]="booking.careType" required>
+    <option value="">-- Chọn loại --</option>
+    <option value="elder">Người già</option>
+    <option value="child">Trẻ em</option>
+    <option value="pet">Thú cưng</option>
+  </select>
+  <div *ngIf="bookingForm.submitted && bookingForm.controls['careType']?.invalid" style="color:red">
+    Vui lòng chọn loại chăm sóc.
+  </div>
+
+  <br>
+
+  <label>Ngày:</label>
+  <input type="date" name="date" [(ngModel)]="booking.date" required>
+  <div *ngIf="bookingForm.submitted && bookingForm.controls['date']?.invalid" style="color:red">
+    Vui lòng chọn ngày.
+  </div>
+
+  <br>
+
+  <label>Giờ:</label>
+  <input type="time" name="time" [(ngModel)]="booking.time" required>
+  <div *ngIf="bookingForm.submitted && bookingForm.controls['time']?.invalid" style="color:red">
+    Vui lòng chọn giờ.
+  </div>
+
+  <br>
+
+  <label>Ghi chú:</label>
+  <textarea name="note" [(ngModel)]="booking.note"></textarea>
+
+  <br><br>
+
+  <button type="submit">Đặt lịch</button>
+</form>

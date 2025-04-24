@@ -1,0 +1,184 @@
+<div class="top-bar d-none d-lg-block">
+    <div class="container-fluid">
+        <div class="top-bar-content">
+            <a routerLink="/" class="top-link">Careers</a>
+            <span class="top-phone">☎ Call Us 24/7 <strong style="color: #fff;">855.970.1177</strong></span>
+        </div>
+    </div>
+</div>
+
+<nav class="navbar navbar-expand-lg main-navbar">
+    <div class="container-fluid">
+        <div class="sidebar-toggle-trigger">
+            <button class="toggle-btn" (click)="onToggleSidebar()">☰</button>
+        </div>
+        <a class="navbar-brand" routerLink="/">
+            <img src="https://www.vitas.com/-/media/vitas/images/logos/vitas-logo-white.svg" alt="VITAS Logo">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarCollapse"
+            aria-controls="mainNavbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" routerLink="/">
+                        <i class="nav-icon fas fa-home"></i>
+                        Trang chủ
+                    </a>
+                </li>
+
+                <li class="nav-item nav-item-has-megamenu"> <a class="nav-link" routerLink="/elder-care">Người già</a>
+
+                    <div class="megamenu-dropdown">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6><a href="/elder-care/basic-care" style="text-decoration: none;">Chăm sóc cơ bản</a></h6>
+                                    <ul class="megamenu-list">
+                                        <li><a href="/elder-care/bathing">Tắm rửa</a></li>
+                                        <li><a href="/elder-care/personal-hygiene">Vệ sinh cá nhân</a></li>
+                                        <li><a href="/elder-care/basic-care/meal-support">Cho ăn</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6>Y tế và Sức khỏe</h6>
+                                    <ul class="megamenu-list">
+                                        <li><a href="/elder-care/medical-care">Theo dõi thuốc</a></li>
+                                        <li><a href="/elder-care/excercises">Tập thể dục</a></li>
+                                        <li><a href="/elder-care/periodic-checkup">Kiểm tra định kỳ</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6>Hỗ trợ tinh thần</h6>
+                                    <ul class="megamenu-list">
+                                        <li><a href="/elder-care/chat">Trò chuyện</a></li>
+                                        <li><a href="/elder-care/recreational-activities">Hoạt động giải trí</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item nav-item-has-megamenu">
+                    <a class="nav-link" routerLink="/child-care"> Trẻ em </a>
+                    <div class="megamenu-dropdown">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6"> <h6>Chăm sóc trẻ sơ sinh</h6>
+                                    <ul class="megamenu-list">
+                                        <li><a href="#">Cho bé bú</a></li>
+                                        <li><a href="#">Thay tã</a></li>
+                                        <li><a href="#">Tắm cho bé</a></li>
+                                        <li><a href="#">Ngủ đúng giờ</a></li>
+                                    </ul>
+                                </div>
+                                 <div class="col-md-6">
+                                    <h6>Chăm sóc trẻ lớn</h6>
+                                    <ul class="megamenu-list">
+                                       <li><a href="#">Chuẩn bị bữa ăn</a></li>
+                                       <li><a href="#">Hỗ trợ học tập</a></li>
+                                       <li><a href="#">Hoạt động vui chơi</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item nav-item-has-megamenu">
+                    <a class="nav-link" routerLink="/pet-care"> Thú cưng </a>
+                    <div class="megamenu-dropdown">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6>Chó</h6>
+                                    <ul class="megamenu-list">
+                                        <li><a href="#">Tắm & Chải lông</a></li>
+                                         <li><a href="#">Huấn luyện cơ bản</a></li>
+                                         <li><a href="#">Chăm sóc tại nhà</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6>Mèo</h6>
+                                    <ul class="megamenu-list">
+                                        <li><a href="#">Vệ sinh khay cát</a></li>
+                                        <li><a href="#">Chải lông</a></li>
+                                        <li><a href="#">Kiểm tra sức khỏe</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6>Thú cưng khác</h6>
+                                    <ul class="megamenu-list">
+                                        <li><a href="#">Chim cảnh</a></li>
+                                        <li><a href="#">Cá cảnh</a></li>
+                                        <li><a href="#">Hamster</a></li>
+                                        <li><a href="#">Thỏ</a></li>
+                                    </ul>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/booking"> Đặt lịch </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/appointments"> Lịch hẹn </a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav mb-2 mb-lg-0 ms-lg-auto">
+                <li class="nav-item" *ngIf="!authService.isLoggedIn()">
+                    <a class="nav-link" routerLink="/login">
+                        <i class="nav-icon fas fa-sign-in-alt"></i> Đăng nhập
+                    </a>
+                </li>
+                <li class="nav-item" *ngIf="!authService.isLoggedIn()">
+                    <a class="nav-link" routerLink="/register">
+                        <i class="nav-icon fas fa-user-plus"></i> Đăng ký
+                    </a>
+                </li>
+                <li class="nav-item dropdown" *ngIf="authService.isLoggedIn()">
+
+                    <a class="nav-link dropdown-toggle user-menu" id="userDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="assets/images/IMG_1444.JPG" class="user-avatar rounded-circle">
+
+                        <span class="user-name ms-2 d-none d-lg-inline">Admin</span>
+
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+
+                        <li *ngIf="isAdmin()"><a class="dropdown-item" routerLink="/admin-dashboard"><i
+                                    class="fas fa-tools me-2"></i>Admin Dashboard</a></li>
+
+                        <li *ngIf="isUser()"><a class="dropdown-item" routerLink="/user-dashboard"><i
+                                    class="fas fa-user me-2"></i>User Dashboard</a></li>
+
+                        <li><a class="dropdown-item" routerLink="/profile"><i class="fas fa-id-card me-2"></i>Thông tin
+
+                                cá nhân</a></li>
+                        <li><a class="dropdown-item" routerLink="/update-profile"><i class="fas fa-edit me-2"></i>Cập
+                                nhật hồ sơ</a></li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li><a class="dropdown-item" (click)="logout()"><i class="fas fa-sign-out-alt me-2"></i>Đăng
+                                xuất</a></li>
+
+                    </ul>
+
+                </li>
+                <!-- <li class="nav-item">
+                    <div class="nav-actions ms-lg-3"> <button class="btn btn-secondary">REFERR</button> </div>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+</nav>
