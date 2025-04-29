@@ -1,66 +1,88 @@
-form {
-  max-width: 500px;
-  margin: 40px auto;
+.booking-form {
+  max-width: 600px;
+  margin: 20px auto;
   padding: 20px;
   border: 1px solid #ccc;
-  border-radius: 12px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
-  color: #333;
-}
-
-input[type="text"],
-input[type="date"],
-input[type="time"],
-select,
-textarea {
-  width: 100%;
-  padding: 8px 10px;
-  margin-bottom: 16px;
-  border: 1px solid #ccc;
   border-radius: 8px;
-  box-sizing: border-box;
-  font-size: 14px;
-  background-color: #fff;
-  transition: border-color 0.3s;
+  font-family: sans-serif;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: #007bff;
-  outline: none;
+fieldset {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 15px;
 }
 
-textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
+legend {
   font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  color: #333;
+  padding: 0 10px;
 }
 
-button:hover {
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="datetime-local"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Needed to prevent padding from expanding width */
+}
+
+.form-group input[type="radio"] {
+    margin-right: 5px;
+}
+.form-group input[type="radio"] + label {
+    display: inline-block;
+    margin-right: 15px;
+    font-weight: normal;
+}
+
+
+.form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button[type="submit"]:not(:disabled):hover {
   background-color: #0056b3;
 }
 
-div[style*="color:red"] {
-  margin-top: -12px;
-  margin-bottom: 10px;
-  font-size: 13px;
-  color: #d9534f;
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+.success-message {
+    color: green;
+    margin-top: 10px;
 }

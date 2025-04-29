@@ -1,47 +1,92 @@
-<h2>Đặt lịch chăm sóc</h2>
-<form (ngSubmit)="onSubmit()" #bookingForm="ngForm">
+<h2>Đặt Lịch Dịch Vụ</h2>
 
-  <label>Họ tên:</label>
-  <input type="text" name="name" [(ngModel)]="booking.name" required minlength="2">
-  <div *ngIf="bookingForm.submitted && bookingForm.controls['name']?.invalid" style="color:red">
-    Họ tên không được để trống và phải ít nhất 2 ký tự.
-  </div>
+<form (ngSubmit)="onSubmit()" #bookingForm="ngForm" class="booking-form">
 
-  <br>
+  <fieldset>
+    <legend>Thông Tin Đối Tượng</legend>
 
-  <label>Loại chăm sóc:</label>
-  <select name="careType" [(ngModel)]="booking.careType" required>
-    <option value="">-- Chọn loại --</option>
-    <option value="elder">Người già</option>
-    <option value="child">Trẻ em</option>
-    <option value="pet">Thú cưng</option>
-  </select>
-  <div *ngIf="bookingForm.submitted && bookingForm.controls['careType']?.invalid" style="color:red">
-    Vui lòng chọn loại chăm sóc.
-  </div>
+    <div class="form-group">
+      <label for="subjectType">Loại đối tượng:</label>
+      <select id="subjectType" name="subjectType" [(ngModel)]="selectedSubjectTypeId" (ngModelChange)="onSubjectTypeChange($event)" required>
+        <option value="" disabled>-- Chọn loại đối tượng --</option>
+        <option *ngFor="let type of subjectTypes" [value]="type.typeid">{{ type.subjectname }}</option>
+      </select>
+    </div>
 
-  <br>
+    <div class="form-group" *ngIf="selectedSubjectTypeId">
+       <label for="existingSubject">Chọn đối tượng đã lưu:</label>
+       <select id="existingSubject" name="existingSubject" [(ngModel)]="bookingData.subjectId" (ngModelChange)="onExistingSubjectSelect($event)">
+          <option value="">-- Hoặc tạo đối tượng mới bên dưới --</option>
+          <option *ngFor="let subject of existingSubjects" [value]="subject.subjectid">{{ subject.name }}</option>
+       </select>
+    </div>
 
-  <label>Ngày:</label>
-  <input type="date" name="date" [(ngModel)]="booking.date" required>
-  <div *ngIf="bookingForm.submitted && bookingForm.controls['date']?.invalid" style="color:red">
-    Vui lòng chọn ngày.
-  </div>
+    <ng-container *ngIf="!bookingData.subjectId && selectedSubjectTypeId">
+        <div class="form-group">
+          <label for="subjectName">Tên đối tượng:</label>
+          <input type="text" id="subjectName" name="subjectname" [(ngModel)]="subjectData.name" required>
+        </div>
 
-  <br>
+        <div class="form-group">
+          <label for="subjectdob">Ngày sinh:</label>
+          <input type="date" id="subjectDob" name="subjectdob" [(ngModel)]="subjectData.dateOfBirth">
+        </div>
 
-  <label>Giờ:</label>
-  <input type="time" name="time" [(ngModel)]="booking.time" required>
-  <div *ngIf="bookingForm.submitted && bookingForm.controls['time']?.invalid" style="color:red">
-    Vui lòng chọn giờ.
-  </div>
+         <div class="form-group">
+            <label>Giới tính:</label>
+            <input type="radio" id="male" name="subjectgender" [value]="1" [(ngModel)]="subjectData.gender"> <label for="male">Đực/Nam</label>
+            <input type="radio" id="female" name="subjectgender" [value]="0" [(ngModel)]="subjectData.gender"> <label for="female">Cái/Nữ</label>
+         </div>
 
-  <br>
+        <div class="form-group">
+          <label for="medicalNotes">Ghi chú y tế (nếu có):</label>
+          <textarea id="medicalNotes" name="medicalnotes" [(ngModel)]="subjectData.medicalNotes"></textarea>
+        </div>
+        </ng-container>
+  </fieldset>
 
-  <label>Ghi chú:</label>
-  <textarea name="note" [(ngModel)]="booking.note"></textarea>
+  <fieldset>
+      <legend>Thông Tin Đặt Lịch</legend>
 
-  <br><br>
+      <div class="form-group">
+          <label for="service">Chọn dịch vụ:</label>
+          <select id="service" name="service" [(ngModel)]="bookingData.serviceId" required [disabled]="!selectedSubjectTypeId">
+              <option value="" disabled>-- Chọn dịch vụ --</option>
+              <option *ngFor="let service of filteredServices" [value]="service.serviceid">
+                  {{ service.name }} ({{ service.duration }} phút - {{ service.price | currency:'VND' }})
+              </option>
+          </select>
+          <div *ngIf="loadingServices">Đang tải dịch vụ...</div>
+      </div>
 
-  <button type="submit">Đặt lịch</button>
+      <div class="form-group">
+          <label for="address">Địa chỉ thực hiện:</label>
+           <select id="address" name="address" [(ngModel)]="bookingData.addressId" required>
+              <option value="" disabled>-- Chọn địa chỉ --</option>
+              <option *ngFor="let address of customerAddresses" [value]="address.addressid">
+                {{ address.street }}, {{ address.ward }}, {{ address.district }}, {{ address.city }}
+              </option>
+              </select>
+      </div>
+
+      <div class="form-group">
+          <label for="startTime">Thời gian bắt đầu dự kiến:</label>
+          <input type="datetime-local" id="startTime" name="startTime" [(ngModel)]="bookingData.scheduledStartTime" required>
+      </div>
+
+      <div class="form-group">
+          <label for="notes">Ghi chú thêm:</label>
+          <textarea id="notes" name="notes" [(ngModel)]="bookingData.notes"></textarea>
+      </div>
+
+       <input type="hidden" name="customerId" [(ngModel)]="bookingData.customerId">
+
+  </fieldset>
+
+  <button type="submit" [disabled]="!bookingForm.form.valid || processing">
+    {{ processing ? 'Đang xử lý...' : 'Đặt Lịch' }}
+  </button>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
 </form>

@@ -1,40 +1,133 @@
 <div class="register-container">
-    <h2>Đăng Ký Tài Khoản</h2>
-  
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="username">Tên đăng nhập</label>
-        <input type="text" id="username" class="form-control" formControlName="username">
-        <small *ngIf="submitted && registerForm.controls['username'].invalid" class="error">
-          Tên đăng nhập phải có ít nhất 4 ký tự.
-        </small>
-      </div>
-  
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" class="form-control" formControlName="email">
-        <small *ngIf="submitted && registerForm.controls['email'].invalid" class="error">
-          Email không hợp lệ.
-        </small>
-      </div>
-  
-      <div class="form-group">
-        <label for="password">Mật khẩu</label>
-        <input type="password" id="password" class="form-control" formControlName="password">
-        <small *ngIf="submitted && registerForm.controls['password'].invalid" class="error">
-          Mật khẩu phải có ít nhất 6 ký tự.
-        </small>
-      </div>
-  
-      <div class="form-group">
-        <label for="confirmPassword">Nhập lại mật khẩu</label>
-        <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword">
-        <small *ngIf="submitted && registerForm.controls['confirmPassword'].invalid" class="error">
-          Vui lòng nhập lại mật khẩu.
-        </small>
-      </div>
-  
-      <button type="submit" class="btn btn-primary">Đăng ký</button>
-    </form>
+  <h2>Đăng ký tài khoản</h2>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
   </div>
-  
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <fieldset>
+      <legend>Thông tin tài khoản</legend>
+      <div class="form-group">
+        <label for="username">Tên đăng nhập: <span class="required">*</span></label>
+        <input type="text" id="username" formControlName="username" required>
+        <div *ngIf="f['username'].invalid && f['username'].touched" class="validation-error">
+          <div *ngIf="f['username'].errors?.['required']">Tên đăng nhập không được bỏ trống.</div>
+          <div *ngIf="f['username'].errors?.['minlength']">Tên đăng nhập phải có ít nhất {{ f['username'].errors?.['minlength'].requiredLength }} ký tự.</div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mật khẩu: <span class="required">*</span></label>
+        <input type="password" id="password" formControlName="password" required>
+         <div *ngIf="f['password'].invalid && f['password'].touched" class="validation-error">
+          <div *ngIf="f['password'].errors?.['required']">Mật khẩu không được bỏ trống.</div>
+          <div *ngIf="f['password'].errors?.['minlength']">Mật khẩu phải có ít nhất {{ f['password'].errors?.['minlength'].requiredLength }} ký tự.</div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email: <span class="required">*</span></label>
+        <input type="email" id="email" formControlName="email" required>
+         <div *ngIf="f['email'].invalid && f['email'].touched" class="validation-error">
+          <div *ngIf="f['email'].errors?.['required']">Email không được bỏ trống.</div>
+          <div *ngIf="f['email'].errors?.['email']">Email không đúng định dạng.</div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="phoneNumber">Số điện thoại: <span class="required">*</span></label>
+        <input type="tel" id="phoneNumber" formControlName="phoneNumber" required>
+         <div *ngIf="f['phoneNumber'].invalid && f['phoneNumber'].touched" class="validation-error">
+          <div *ngIf="f['phoneNumber'].errors?.['required']">Số điện thoại không được bỏ trống.</div>
+          </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Thông tin cá nhân</legend>
+       <div class="form-group">
+        <label for="firstName">Tên: <span class="required">*</span></label>
+        <input type="text" id="firstName" formControlName="firstName" required>
+         <div *ngIf="f['firstName'].invalid && f['firstName'].touched" class="validation-error">
+          <div *ngIf="f['firstName'].errors?.['required']">Tên không được bỏ trống.</div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Họ đệm: <span class="required">*</span></label>
+        <input type="text" id="lastName" formControlName="lastName" required>
+         <div *ngIf="f['lastName'].invalid && f['lastName'].touched" class="validation-error">
+          <div *ngIf="f['lastName'].errors?.['required']">Họ đệm không được bỏ trống.</div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="dateOfBirth">Ngày sinh: <span class="required">*</span></label>
+        <input type="date" id="dateOfBirth" formControlName="dateOfBirth" required>
+         <div *ngIf="f['dateOfBirth'].invalid && f['dateOfBirth'].touched" class="validation-error">
+          <div *ngIf="f['dateOfBirth'].errors?.['required']">Ngày sinh không được bỏ trống.</div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="gender">Giới tính: <span class="required">*</span></label>
+        <select id="gender" formControlName="gender" required>
+          <option [ngValue]="null">Chọn giới tính</option>
+          <option [ngValue]="true">Nam</option>
+          <option [ngValue]="false">Nữ</option>
+        </select>
+         <div *ngIf="f['gender'].invalid && f['gender'].touched" class="validation-error">
+          <div *ngIf="f['gender'].errors?.['required']">Giới tính không được bỏ trống.</div>
+          </div>
+      </div>
+    </fieldset>
+
+
+    <fieldset>
+      <legend>Thông tin địa chỉ</legend>
+      <div class="form-group">
+        <label for="country">Quốc gia: <span class="required">*</span></label>
+        <input type="text" id="country" formControlName="country" required>
+         <div *ngIf="f['country'].invalid && f['country'].touched" class="validation-error">
+          <div *ngIf="f['country'].errors?.['required']">Quốc gia không được bỏ trống.</div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="city">Tỉnh/Thành phố: <span class="required">*</span></label>
+        <input type="text" id="city" formControlName="city" required>
+         <div *ngIf="f['city'].invalid && f['city'].touched" class="validation-error">
+          <div *ngIf="f['city'].errors?.['required']">Tỉnh/Thành phố không được bỏ trống.</div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="district">Quận/Huyện: <span class="required">*</span></label>
+        <input type="text" id="district" formControlName="district" required>
+         <div *ngIf="f['district'].invalid && f['district'].touched" class="validation-error">
+          <div *ngIf="f['district'].errors?.['required']">Quận/Huyện không được bỏ trống.</div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="ward">Phường/Xã: <span class="required">*</span></label>
+        <input type="text" id="ward" formControlName="ward" required>
+         <div *ngIf="f['ward'].invalid && f['ward'].touched" class="validation-error">
+          <div *ngIf="f['ward'].errors?.['required']">Phường/Xã không được bỏ trống.</div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="street">Đường/Số nhà: <span class="required">*</span></label>
+        <input type="text" id="street" formControlName="street" required>
+         <div *ngIf="f['street'].invalid && f['street'].touched" class="validation-error">
+          <div *ngIf="f['street'].errors?.['required']">Đường/Số nhà không được bỏ trống.</div>
+          </div>
+      </div>
+    </fieldset>
+
+    <button type="submit">Đăng ký</button>
+  </form>
+</div>

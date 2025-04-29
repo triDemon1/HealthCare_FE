@@ -74,6 +74,11 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./app/components/elder-care/basic-care/basic-care.routes').then(m => m.basicCareRoutes)
   },
+  {
+    path: 'pet-care/products',
+    loadChildren: () =>
+      import('./app/components/pet-care/pet-product-list/pet-product-list.route').then(m => m.petProductList)
+  },
 ];
 
 export default routes;
