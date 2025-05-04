@@ -4,26 +4,29 @@ import { HomeComponent } from './app/components/home/home.component';
 import { RegisterComponent } from './app/components/register/register.component';
 import { BookingComponent } from './app/components/booking/booking.component';
 import { AdminDashboardComponent } from './app/components/admin-dashboard/admin-dashboard.component';
-import { UserManagementComponent } from './app/components/user-management/user-management.component';
 import { RequestApprovalComponent } from './app/components/request-approval/request-approval.component';
 import { ReportsComponent } from './app/components/reports/reports.component';
 import { AppointmentListComponent } from './app/components/appointment-list/appointment-list.component';
 import { ElderCareComponent } from './app/components/elder-care/elder-care.component';
 import { ChildCareComponent } from './app/components/child-care/child-care.component';
 import { PetCareComponent } from './app/components/pet-care/pet-care.component';
+import { CartComponent } from './app/components/cart/cart.component';
+import { ProductComponent } from './app/components/product/product.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'booking', component: BookingComponent},
   { path: 'admin-dashboard', component: AdminDashboardComponent },
-  { path: 'admin/users', component: UserManagementComponent },
   { path: 'admin/requests', component: RequestApprovalComponent },
   { path: 'admin/reports', component: ReportsComponent },
   { path: 'appointments', component: AppointmentListComponent },
   { path: 'elder-care', component: ElderCareComponent },
   { path: 'child-care', component: ChildCareComponent },
   { path: 'pet-care', component: PetCareComponent },
+  { path: 'cart', component: CartComponent },
+  { path: 'products', component: ProductComponent },
+  { path: 'products/:categoryId', component: ProductComponent },
   {
     path: 'elder-care/medical-care',
     loadChildren: () =>
@@ -75,9 +78,38 @@ export const routes: Routes = [
       import('./app/components/elder-care/basic-care/basic-care.routes').then(m => m.basicCareRoutes)
   },
   {
-    path: 'pet-care/products',
+    path: 'admin/users',
     loadChildren: () =>
-      import('./app/components/pet-care/pet-product-list/pet-product-list.route').then(m => m.petProductList)
+      import('./app/components/admin-dashboard/user-management/user-management.route').then(m => m.userManagementRoutes)
+  },
+  {
+    path: 'admin/users/:roleId', // Route for admin/users/:roleId
+    loadChildren: () => import('./app/components/admin-dashboard/user-management/user-management.route').then(m => m.userManagementRoutes)
+  },
+  {
+    path: 'admin/users/create',
+    loadChildren: () =>
+      import('./app/components/admin-dashboard/user-management/user-management.route').then(m => m.userEditRoutes)
+  },
+  {
+    path: 'admin/users/edit/:id',
+    loadChildren: () =>
+      import('./app/components/admin-dashboard/user-management/user-management.route').then(m => m.userEditRoutes)
+  },
+  {
+    path: 'admin/bookings',
+    loadChildren: () =>
+      import('./app/components/admin-dashboard/booking-management/booking-management.route').then(m => m.bookingManagementRoutes)
+  },
+  {
+    path: 'admin/bookings/edit/:id',
+    loadChildren: () =>
+      import('./app/components/admin-dashboard/booking-management/booking-management.route').then(m => m.bookingEditRoutes)
+  },
+  {
+    path: 'admin/services',
+    loadChildren: () =>
+      import('./app/components/admin-dashboard/service-management/service-management.route').then(m => m.serviceManagementRoutes)
   },
 ];
 

@@ -1,0 +1,98 @@
+/* Styles for booking history page */
+.booking-history-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.loading-indicator {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+}
+
+.no-bookings-message {
+    text-align: center;
+    color: #666;
+    margin-top: 20px;
+}
+
+.bookings-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.bookings-list th, .bookings-list td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.bookings-list th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.bookings-list tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Optional: Add some basic responsiveness */
+@media (max-width: 600px) {
+    .bookings-list table, .bookings-list thead, .bookings-list tbody, .bookings-list th, .bookings-list td, .bookings-list tr {
+        display: block;
+    }
+    .bookings-list thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    .bookings-list tr { border: 1px solid #ccc; margin-bottom: 5px; }
+    .bookings-list td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        text-align: right; /* Align data to the right on small screens */
+    }
+    .bookings-list td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        content: attr(data-label); /* Use data-label attribute to show column header */
+        font-weight: bold;
+        text-align: left; /* Align labels to the left */
+    }
+
+    /* Add data-label attributes to your td elements in HTML if using this responsive pattern */
+    /* Example: <td data-label="ID Booking">{{ booking.bookingId }}</td> */
+}
+
+/* Add padding to the main container if needed */
+:host {
+    display: block; /* Ensure component takes up space */
+    padding: 20px;
+}

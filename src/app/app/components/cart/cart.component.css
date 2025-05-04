@@ -1,0 +1,132 @@
+/* src/app/components/pet-product-list/pet-product-list.component.css */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Khoảng cách giữa các item */
+  }
+  
+  .product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+  
+  .product-image-container {
+    width: 100%;
+    height: 200px; /* Chiều cao cố định cho ảnh */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Đảm bảo ảnh không tràn ra ngoài */
+    background-color: #f8f9fa; /* Màu nền nhẹ cho vùng ảnh */
+  }
+  
+  .product-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Thu nhỏ ảnh để vừa khung, giữ tỷ lệ */
+  }
+  
+  .product-info {
+    padding: 15px;
+    flex-grow: 1; /* Đẩy phần action xuống dưới */
+  }
+  
+  .product-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  
+  .product-description {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 10px;
+      /* Giới hạn số dòng hiển thị (tùy chọn) */
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-height: 2.7em; /* Chiều cao tối thiểu cho 2 dòng */
+  }
+  
+  
+  .product-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #dc3545; /* Màu đỏ cho giá */
+    margin-bottom: 10px;
+  }
+  
+  .product-actions {
+    padding: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .btn-add-to-cart {
+    width: 100%; /* Nút chiếm hết chiều rộng */
+  }
+  
+  .btn-add-to-cart i {
+      margin-right: 5px;
+  }
+  
+  /* src/app/components/cart/cart.component.css */
+  .cart-container {
+    padding: 20px;
+    max-width: 1000px; /* Giới hạn chiều rộng */
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .cart-table {
+    margin-bottom: 20px;
+    vertical-align: middle; /* Căn giữa theo chiều dọc */
+  }
+  
+  .cart-item-image {
+    max-width: 80px;
+    max-height: 80px;
+    object-fit: contain;
+    border-radius: 4px;
+    border: 1px solid #eee;
+  }
+  
+  .quantity-input {
+    width: 70px; /* Giảm chiều rộng input */
+    text-align: center;
+    margin: 0 auto; /* Căn giữa input */
+  }
+  
+  .cart-item-row:hover {
+      background-color: #f8f9fa; /* Highlight khi hover */
+  }
+  
+  .cart-summary {
+    border-top: 2px solid #ddd;
+    padding-top: 20px;
+  }
+  
+  /* src/app/components/layout/header/header.component.css */
+  /* (Bạn đã có file này, chỉ cần thêm style cho badge nếu cần tùy chỉnh thêm) */
+  .navbar-nav .nav-link .badge {
+      font-size: 0.7em; /* Kích thước chữ nhỏ hơn cho badge */
+      padding: 0.3em 0.5em; /* Padding cho badge */
+  }

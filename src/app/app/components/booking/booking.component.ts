@@ -43,6 +43,8 @@ export class BookingComponent implements OnInit {
     addressId: '' as number | string,
     serviceId: '' as number | string,
     scheduledStartTime: '',
+    scheduledEndTime: '',
+    priceAtBooking: 0,
     notes: '',
     subjectId: undefined as number | undefined // ID của subject nếu chọn từ danh sách đã có
   };
@@ -160,11 +162,31 @@ export class BookingComponent implements OnInit {
     this.errorMessage = null;
     this.successMessage = null;
 
+    const selectedService = this.allServices.find(s => s.serviceid === Number(this.bookingData.serviceId));
+
+    if (!selectedService) {
+      this.errorMessage = "Vui lòng chọn một dịch vụ hợp lệ.";
+      this.processing = false;
+      return;
+    }
+
+    const startTime = new Date(this.bookingData.scheduledStartTime);
+    // Tính toán thời gian kết thúc dự kiến
+    let endTime: Date | null = null;
+    let price: number;
+    // Kiểm tra nếu duration có giá trị và là số
+    if (selectedService.duration !== null && selectedService.duration !== undefined && typeof selectedService.duration === 'number') {
+      // Nếu duration là số, tính toán thời gian kết thúc
+      endTime = new Date(startTime.getTime() + selectedService.duration);
+      price = selectedService.price!;
+    }
     const payload: BookingPayload = {
       customerid: this.bookingData.customerId,
       addressid: Number(this.bookingData.addressId),
       serviceid: Number(this.bookingData.serviceId),
-      scheduledstarttime: new Date(this.bookingData.scheduledStartTime).toISOString(), // Chuyển sang ISO string
+      scheduledstarttime: startTime.toISOString(), // Chuyển sang ISO string
+      scheduledendtime: endTime ? endTime.toISOString() : null,
+      priceatbooking: Number(price!),
       notes: this.bookingData.notes
     };
 
@@ -177,9 +199,9 @@ export class BookingComponent implements OnInit {
         typeid: Number(this.selectedSubjectTypeId),
         name: this.subjectData.name,
         dateofbirth: this.subjectData.dateOfBirth || undefined, // Gửi undefined nếu rỗng
-        gender: this.subjectData.gender,
-        medicalnotes: this.subjectData.medicalNotes || undefined
-        // imageUrl: this.subjectData.imageUrl || undefined
+        gender: this.subjectData.gender === 1 ? true : (this.subjectData.gender === 0 ? false : undefined),
+        medicalnotes: this.subjectData.medicalNotes || undefined,
+        imageurl: this.subjectData.imageUrl || undefined
       };
     } else {
       this.errorMessage = "Vui lòng chọn loại đối tượng.";
@@ -224,6 +246,8 @@ export class BookingComponent implements OnInit {
       addressId: '' as number | string,
       serviceId: '' as number | string,
       scheduledStartTime: '',
+      scheduledEndTime: '',
+      priceAtBooking: 0,
       notes: '',
       subjectId: undefined as number | undefined // ID của subject nếu chọn từ danh sách đã có
     }; // Reset booking data về giá trị ban đầu

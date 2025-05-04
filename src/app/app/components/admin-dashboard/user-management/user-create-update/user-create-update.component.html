@@ -1,0 +1,121 @@
+<h2>{{ isCreateMode() ? 'Tạo Người dùng Mới' : 'Cập nhật Người dùng' }}</h2>
+
+<div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+</div>
+
+<div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+</div>
+
+
+<div *ngIf="isLoading" class="loading-indicator">
+    Đang tải thông tin người dùng...
+</div>
+
+<div *ngIf="!isLoading">
+    <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" [(ngModel)]="user.username" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" [(ngModel)]="user.email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">{{ isCreateMode() ? 'Mật khẩu:' : 'Mật khẩu (để trống nếu không đổi):' }}</label>
+            <input type="password" id="password" name="password" [(ngModel)]="user.password"
+                [required]="isCreateMode()">
+        </div>
+
+        <div class="form-group">
+            <label for="phoneNumber">Số điện thoại:</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" [(ngModel)]="user.phoneNumber">
+        </div>
+
+        <div class="form-group">
+            <label for="role">Vai trò:</label>
+            <select id="role" name="role" [(ngModel)]="user.roleId" required (change)="onRoleChange()">
+                <option value="0" disabled>-- Chọn vai trò --</option>
+                <option *ngFor="let role of roles" [value]="role.roleId">{{ role.roleName }}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="isActive">Hoạt động:</label>
+            <input type="checkbox" id="isActive" name="isActive" [(ngModel)]="user.isActive">
+        </div>
+
+        <hr>
+        <div *ngIf="isCustomerRole()">
+            <h3>Thông tin Khách hàng</h3>
+            <div class="form-group">
+                <label for="customerFirstName">Tên:</label>
+                <input type="text" id="customerFirstName" name="customerFirstName"
+                    [(ngModel)]="user.customerData!.firstName" required>
+            </div>
+            <div class="form-group">
+                <label for="customerLastName">Họ:</label>
+                <input type="text" id="customerLastName" name="customerLastName"
+                    [(ngModel)]="user.customerData!.lastName">
+            </div>
+            <div class="form-group">
+                <label for="customerDateOfBirth">Ngày sinh:</label>
+                <input type="date" id="customerDateOfBirth" name="customerDateOfBirth"
+                    [(ngModel)]="user.customerData!.dateOfBirth">
+            </div>
+            <div class="form-group">
+                <label for="customerGender">Giới tính:</label>
+                <div>
+                    <input type="radio" id="genderMale" name="customerGender" [value]="true"
+                        [(ngModel)]="user.customerData!.gender">
+                    <label for="genderMale">Nam</label>
+                    <input type="radio" id="genderFemale" name="customerGender" [value]="false"
+                        [(ngModel)]="user.customerData!.gender">
+                    <label for="genderFemale">Nữ</label>
+                    <input type="radio" id="genderUnknown" name="customerGender" [value]="undefined"
+                        [(ngModel)]="user.customerData!.gender">
+                    <label for="genderUnknown">Không xác định</label>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isStaffRole()">
+            <h3>Thông tin Nhân viên</h3>
+            <div class="form-group">
+                <label for="staffFirstName">Tên:</label>
+                <input type="text" id="staffFirstName" name="staffFirstName" [(ngModel)]="user.staffData!.firstName"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="staffLastName">Họ:</label>
+                <input type="text" id="staffLastName" name="staffLastName" [(ngModel)]="user.staffData!.lastName"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="staffPhoneNumber">Số điện thoại (Nhân viên):</label>
+                <input type="text" id="staffPhoneNumber" name="staffPhoneNumber"
+                    [(ngModel)]="user.staffData!.phoneNumber">
+            </div>
+            <div class="form-group">
+                <label for="staffSkills">Kỹ năng:</label>
+                <input type="text" id="staffSkills" name="staffSkills" [(ngModel)]="user.staffData!.skills">
+            </div>
+            <div class="form-group">
+                <label for="staffExpYear">Số năm kinh nghiệm:</label>
+                <input type="number" id="staffExpYear" name="staffExpYear" [(ngModel)]="user.staffData!.expYear">
+            </div>
+            <div class="form-group">
+                <label for="staffIsAvailable">Có sẵn:</label>
+                <input type="checkbox" id="staffIsAvailable" name="staffIsAvailable"
+                    [(ngModel)]="user.staffData!.isAvailable">
+            </div>
+        </div>
+        <button type="submit" [disabled]="isSaving">{{ isSaving ? 'Đang lưu...' : (isCreateMode() ? 'Tạo Người dùng' :
+            'Cập nhật') }}</button>
+
+        <button type="button" (click)="router.navigate(['/admin/users'])">Hủy</button>
+    </form>
+</div>

@@ -1,0 +1,74 @@
+<div class="megamenu-container">
+    <h6>Sản phẩm</h6>
+    <ul class="megamenu-list">
+        <li><a href="#" (click)="showAllProducts($event)">Tất cả sản phẩm</a></li>
+        <li><a href="#" (click)="filterByCategory($event, 1)">Sản phẩm cho Người già</a></li>
+        <li><a href="#" (click)="filterByCategory($event, 2)">Sản phẩm cho Trẻ em</a></li>
+        <li><a href="#" (click)="filterByCategory($event, 3)">Sản phẩm cho Thú cưng</a></li>
+    </ul>
+</div>
+
+<hr>
+
+<h2>{{ displayedCategoryName }}</h2>
+
+<ng-container *ngIf="pagedProducts$ | async as pagedResult; else loadingOrError">
+    <div *ngIf="pagedResult.items && pagedResult.items.length > 0; else noProducts" class="product-grid">
+        <div *ngFor="let product of pagedResult.items" class="product-card">
+            <div class="product-image-container">
+                <img [src]="product.imageUrl || 'assets/images/placeholder.png'"
+                     [alt]="product.name"
+                     class="product-image">
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">{{ product.name }}</h3>
+                <p class="product-description" *ngIf="product.description">{{ product.description }}</p>
+                <p class="product-price">Giá: {{ product.price | currency:'VND':'symbol':'1.0-0' }}</p>
+            </div>
+            <div class="product-actions">
+                <button class="btn btn-primary btn-add-to-cart"
+                        (click)="addToCart(product)"
+                        [disabled]="product.stockQuantity <= 0">
+                    <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                </button>
+                <span *ngIf="product.stockQuantity <= 0" class="text-danger ms-2">Hết hàng</span>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #noProducts>
+        <div class="alert alert-info">Không tìm thấy sản phẩm nào trong danh mục này.</div>
+    </ng-template>
+
+    <div *ngIf="pagedResult.totalCount > 0" class="pagination-controls">
+        <button class="btn btn-secondary"
+                (click)="goToPage(pagedResult.pageIndex - 1)"
+                [disabled]="isFirstPage(pagedResult)">
+            Trước
+        </button>
+
+        <span *ngFor="let page of getPageNumbers(pagedResult)">
+            <button class="btn"
+                    [class.btn-primary]="page === pagedResult.pageIndex"
+                    [class.btn-outline-primary]="page !== pagedResult.pageIndex"
+                    (click)="goToPage(page)">
+                {{ page + 1 }} </button>
+        </span>
+
+
+        <button class="btn btn-secondary"
+                (click)="goToPage(pagedResult.pageIndex + 1)"
+                [disabled]="isLastPage(pagedResult)">
+            Sau
+        </button>
+
+        <span class="ms-3">
+            Tổng số: {{ pagedResult.totalCount }} sản phẩm
+        </span>
+    </div>
+
+</ng-container>
+
+<ng-template #loadingOrError>
+    <p>Đang tải sản phẩm...</p>
+</ng-template>

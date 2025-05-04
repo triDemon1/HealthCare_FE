@@ -1,27 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Product } from '../models/product.interface'; // Import interface
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Pagination } from '../models/pagination.interface';
 
 @Injectable({
   providedIn: 'root' // Hoặc 'providedIn: ProductsModule' nếu bạn muốn service chỉ có trong module này
 })
 export class ProductService {
-  private dummyProducts: Product[] = [
-    { id: 1, name: 'Hạt Doggo Pro', category: 'dog-food', price: 250000, imageUrl: 'assets/images/dong_vat/1.jpg' }, // <-- Thêm id và imageUrl
-  { id: 2, name: 'Pate Miu Miu', category: 'cat-food', price: 80000, imageUrl: 'assets/images/dong_vat/2.jpg' },
-  { id: 3, name: 'Vòng cổ da', category: 'equipment', price: 150000, imageUrl: 'assets/images/dong_vat/3.jpg' },
-  { id: 4, name: 'Bóng đồ chơi', category: 'toys', price: 50000, imageUrl: 'assets/images/dong_vat/4.jpg' },
-  { id: 5, name: 'Hạt Doggo Max', category: 'dog-food', price: 350000, imageUrl: 'assets/images/dong_vat/5.jpg' },
-    // ... thêm sản phẩm khác
-  ];
+  private apiUrl = `https://localhost:7064/api/products`; // Sử dụng biến môi trường
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getProductsByCategory(category: string): Observable<Product[]> {
-    // Giả lập gọi API hoặc lấy dữ liệu từ nguồn
-    const filteredProducts = this.dummyProducts.filter(p => p.category === category);
-    return of(filteredProducts); // Sử dụng 'of' để trả về Observable từ dữ liệu giả lập
+  // Lấy sản phẩm theo CategoryID (hoặc tên category nếu API hỗ trợ)
+  getProductsByCategory(categoryId: number): Observable<Product[]> {
+    // Điều chỉnh URL API theo cách backend của bạn xử lý filtering
+    return this.http.get<Product[]>(`${this.apiUrl}/category/${categoryId}`);
   }
 
-  // getProductDetail(id: number): Observable<Product | undefined> { ... }
+  // Lấy chi tiết một sản phẩm (nếu cần)
+  getProductById(productId: number): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/${productId}`);
+  }
+  getPagedProducts(pageIndex: number, pageSize: number, categoryId: number | null = null): Observable<Pagination<Product>> {
+    let params = new HttpParams()
+      .set('pageIndex', pageIndex.toString()) // Chuyển số sang string cho HttpParams
+      .set('pageSize', pageSize.toString());
+
+    if (categoryId !== null) {
+      params = params.set('categoryId', categoryId.toString());
+    }
+
+    // Gửi yêu cầu GET với các tham số query
+    return this.http.get<Pagination<Product>>(this.apiUrl, { params });
+  }
 }

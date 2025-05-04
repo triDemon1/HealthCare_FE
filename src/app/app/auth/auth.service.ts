@@ -48,9 +48,8 @@ export class AuthService {
   // Response nhận được là LoginResponse chứa Userid, Username, Role
   handleLoginSuccess(response: LoginResponse): void {
     // Kiểm tra xem response có chứa các thuộc tính cần thiết không
-    if (response?.userid && response?.username && response?.role && response?.customerid) {
+    if (response?.userid && response?.username && response?.role) {
       console.log("User info nhận được từ server:", response);
-      // Lưu trực tiếp đối tượng response vì nó chứa thông tin user
       this.saveUserInfo(response);
       // Token được Backend set vào Cookie HttpOnly, không cần lưu ở đây
       // console.log("Token (không hiển thị vì HttpOnly):...", "N/A"); // Không thể truy cập token
@@ -75,11 +74,11 @@ export class AuthService {
   }
 
   isAdmin(): boolean {
-    return this.getRole() === 'admin';
+    return this.getRole() === 'Admin';
   }
 
   isUser(): boolean {
-    return this.getRole() === 'user';
+    return this.getRole() === 'Customer';
   }
 
   // Kiểm tra trạng thái đăng nhập dựa trên việc có thông tin user hay không

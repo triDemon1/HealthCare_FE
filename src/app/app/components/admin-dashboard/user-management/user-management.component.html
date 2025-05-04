@@ -1,0 +1,89 @@
+<h2>Quản lý Tài khoản Người dùng</h2>
+<div class="megamenu-container">
+  <h6>Sản phẩm</h6>
+  <ul class="megamenu-list">
+      <li><a href="#" (click)="showAllUsers($event)">Tất cả người dùng</a></li>
+      <li><a href="#" (click)="filterByRole($event, 1)">Danh sách tài khoản khách hàng</a></li>
+      <li><a href="#" (click)="filterByRole($event, 2)">Danh sách tài khoản nhân viên</a></li>
+      <li><a href="#" (click)="filterByRole($event, 3)">Danh sách tài khoản admin</a></li>
+  </ul>
+</div>
+
+<hr>
+
+<h2>{{ displayedRoleName }}</h2>
+
+<div *ngIf="errorMessage && !isLoading" class="alert alert-danger">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="isLoading && !errorMessage" class="loading-indicator">
+  Đang tải danh sách người dùng...
+</div>
+
+<ng-container *ngIf="pagedUsers$ | async as pagedResult">
+
+  <button class="btn btn-primary mb-3" (click)="router.navigate(['/admin/users/create'])">Thêm Người dùng Mới</button>
+
+  <div *ngIf="pagedResult && pagedResult.totalCount === 0 && !isLoading" class="no-data-message">
+    Chưa có người dùng nào trong hệ thống.
+  </div>
+
+  <div *ngIf="pagedResult && pagedResult.items.length > 0" class="data-table">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Số điện thoại</th>
+          <th>Vai trò</th>
+          <th>Active</th>
+          <th>Ngày tạo</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of pagedResult.items">
+          <td>{{ user.userId }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phoneNumber || 'N/A' }}</td>
+          <td>{{ user.roleName }}</td>
+          <td>{{ user.isActive ? 'Có' : 'Không' }}</td>
+          <td>{{ user.createdAt | date: 'shortDate' }}</td>
+          <td>
+            <button class="btn btn-sm btn-warning" (click)="router.navigate(['/admin/users/edit', user.userId])">Sửa</button>
+            <button class="btn btn-sm btn-danger" (click)="confirmDeleteUser(user.userId)">Xóa</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="pagedResult && pagedResult.totalPages > 1" class="pagination-controls mt-3">
+        <button class="btn btn-secondary"
+                (click)="goToPage(pagedResult.pageIndex - 1)"
+                [disabled]="isFirstPage(pagedResult)">
+            Trước
+        </button>
+
+        <span *ngFor="let page of getPageNumbers(pagedResult)">
+            <button class="btn"
+                    [class.btn-primary]="page === pagedResult.pageIndex"       [class.btn-outline-primary]="page !== pagedResult.pageIndex" (click)="goToPage(page)">
+                {{ page + 1 }} </button>
+        </span>
+
+        <button class="btn btn-secondary"
+                (click)="goToPage(pagedResult.pageIndex + 1)"
+                [disabled]="isLastPage(pagedResult)">
+            Sau
+        </button>
+
+        <span class="ms-3">
+            Tổng số: {{ pagedResult.totalCount }} người dùng
+        </span>
+    </div>
+
+  </div>
+
+</ng-container>

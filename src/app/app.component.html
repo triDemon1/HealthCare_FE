@@ -3,21 +3,21 @@
     <app-header (toggleSidebar)="toggleSidebar()" *ngIf="!isLoginPage()  && !isRegisterPage()"></app-header>
 
     <div class="main-layout" *ngIf="!isLoginPage() && !isRegisterPage() && !isAdminPage()">
-      
 
-       <!-- Sidebar -->
-       <app-sidebar [isSidebarOpen]="isSidebarOpen" (toggle)="isSidebarOpen = $event"></app-sidebar>
-       <div class="sidebar-overlay" (click)="toggleSidebar()" *ngIf="isSidebarOpen"></div>
+
+        <!-- Sidebar -->
+        <app-sidebar [isSidebarOpen]="isSidebarOpen" (toggle)="isSidebarOpen = $event"></app-sidebar>
+        <div class="sidebar-overlay" (click)="toggleSidebar()" *ngIf="isSidebarOpen"></div>
         <div class="content" [ngClass]="{'expanded': !isSidebarOpen}">
             <router-outlet></router-outlet>
         </div>
     </div>
 
-    <!-- Kiểm tra nếu không phải trang login hoặc register thì hiển thị footer -->
-    <app-footer *ngIf="!isLoginPage() && !isRegisterPage()"></app-footer>
-
     <!-- Chỉ hiển thị router-outlet khi là trang login hoặc register -->
     <div *ngIf="isLoginPage() || isRegisterPage() || isAdminPage()">
         <router-outlet></router-outlet>
     </div>
+    <!-- Kiểm tra nếu không phải trang login hoặc register thì hiển thị footer -->
+    <app-footer *ngIf="!isLoginPage() && !isRegisterPage() && !isAdminPage()"></app-footer>
+
 </div>

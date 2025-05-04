@@ -7,6 +7,7 @@ import { SubjectType } from '../models/subjecttypes.interface';
 import { Service } from '../models/services.interface';
 import { ExistingSubject } from '../models/existingSubject.interface';
 import { CustomerAddress } from '../models/customerAddress.interface';
+import { BookingDto } from '../models/BookingDto.interface';
 @Injectable({
     providedIn: 'root'
   })
@@ -47,9 +48,17 @@ import { CustomerAddress } from '../models/customerAddress.interface';
   
     createBooking(payload: BookingPayload): Observable<any> {
       // Backend sẽ dựa vào subjectId hoặc newSubjectData để xử lý
+      console.log('BookingPayload gửi đi từ Service:', JSON.stringify(payload)); // Log để kiểm tra
       return this.http.post<any>(`${this.apiUrl}/bookings`, payload)
         .pipe(catchError(this.handleError));
     }
+    // --- NEW: Hàm để gọi API lấy danh sách booking của khách hàng ---
+    getCustomerBookings(customerId: number): Observable<BookingDto[]> {
+      const url = `${this.apiUrl}/customers/${customerId}/bookings`;
+      console.log('Calling API:', url); // Log để debug URL
+      return this.http.get<BookingDto[]>(url)
+        .pipe(catchError(this.handleError)); // Sử dụng lại hàm xử lý lỗi đã có
+   }
   
     private handleError(error: any) {
       console.error('API Error:', error);

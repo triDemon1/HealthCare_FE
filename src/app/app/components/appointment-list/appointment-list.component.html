@@ -1,21 +1,43 @@
-<h2>Danh sách lịch hẹn</h2>
-<table border="1" cellpadding="8">
-  <thead>
-    <tr>
-      <th>Họ tên</th>
-      <th>Loại chăm sóc</th>
-      <th>Ngày</th>
-      <th>Giờ</th>
-      <th>Ghi chú</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let a of appointments">
-      <td>{{ a.name }}</td>
-      <td>{{ a.careType }}</td>
-      <td>{{ a.date }}</td>
-      <td>{{ a.time }}</td>
-      <td>{{ a.note }}</td>
-    </tr>
-  </tbody>
-</table>
+<div *ngIf="errorMessage" class="alert alert-danger">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="isLoading" class="loading-indicator">
+  Đang tải lịch sử đặt lịch...
+</div>
+
+<div *ngIf="!isLoading && !errorMessage">
+  <h2>Danh sách đặt lịch của bạn</h2>
+
+  <div *ngIf="bookings.length === 0" class="no-bookings-message">
+    Bạn chưa có lịch đặt nào.
+  </div>
+
+  <div *ngIf="bookings.length > 0" class="bookings-list">
+    <table>
+      <thead>
+        <tr>
+          <th>ID Booking</th>
+          <th>Dịch vụ</th>
+          <th>Đối tượng</th>
+          <th>Thời gian</th>
+          <th>Trạng thái</th>
+          <th>Giá</th>
+          <th>Ngày đặt</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of bookings">
+          <td>{{ booking.bookingId }}</td>
+          <td>{{ booking.serviceName }}</td>
+          <td>{{ booking.subjectName || 'N/A' }}</td> <td>
+            {{ booking.scheduledStartTime | date: 'short' }} -
+            {{ booking.scheduledEndTime | date: 'shortTime' }}
+          </td>
+          <td>{{ booking.statusName }}</td>
+          <td>{{ booking.priceAtBooking | currency:'VND':'symbol':'1.0-0' }}</td> <td>{{ booking.createdAt | date: 'shortDate' }}</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

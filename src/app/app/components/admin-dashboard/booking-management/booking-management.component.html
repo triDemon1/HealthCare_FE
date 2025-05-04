@@ -1,0 +1,52 @@
+<h2>Quản lý Lịch đặt</h2>
+
+<div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+</div>
+
+<div *ngIf="isLoading" class="loading-indicator">
+    Đang tải danh sách lịch đặt...
+</div>
+
+<div *ngIf="!isLoading && !errorMessage">
+    <div *ngIf="bookings.length === 0" class="no-data-message">
+        Chưa có lịch đặt nào trong hệ thống.
+    </div>
+
+    <div *ngIf="bookings.length > 0" class="data-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Khách hàng</th>
+                    <th>Dịch vụ</th>
+                    <th>Đối tượng</th>
+                    <th>Thời gian</th>
+                    <th>Trạng thái</th>
+                    <th>Giá</th>
+                    <th>Ngày đặt</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let booking of bookings">
+                    <td>{{ booking.bookingId }}</td>
+                    <td>{{ booking.customerName || 'N/A' }} (ID: {{ booking.customerId }})</td>
+                    <td>{{ booking.serviceName || 'N/A' }}</td>
+                    <td>{{ booking.subjectName || 'N/A' }} (ID: {{ booking.subjectId }})</td>
+                    <td>
+                        {{ booking.scheduledStartTime | date: 'short' }} -
+                        {{ booking.scheduledEndTime | date: 'shortTime' }}
+                    </td>
+                    <td>{{ booking.statusName || 'N/A' }}</td>
+                    <td>{{ booking.priceAtBooking | currency:'VND':'symbol':'1.0-0' }}</td>
+                    <td>{{ booking.createdAt | date: 'shortDate' }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-info"
+                            [routerLink]="['/admin/bookings/edit', booking.bookingId]">Xem/Sửa</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

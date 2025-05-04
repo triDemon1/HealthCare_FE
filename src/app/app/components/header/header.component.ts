@@ -1,7 +1,9 @@
-import { Component,  EventEmitter, Output } from '@angular/core';
+import { Component,  EventEmitter, Output, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Subscription, Observable } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 import { CommonModule } from '@angular/common'; // ✅ Thêm CommonModule
+import { CartService } from '../../services/cart.service';
 @Component({
   selector: 'app-header',
   imports: [RouterModule, CommonModule],
@@ -9,8 +11,25 @@ import { CommonModule } from '@angular/common'; // ✅ Thêm CommonModule
   styleUrl: './header.component.css'
 })
 
-export class HeaderComponent {
-  constructor(public authService: AuthService) {}
+export class HeaderComponent implements OnInit, OnDestroy {
+  cartItemCount$: Observable<number>;
+  constructor(public authService: AuthService, private cartService: CartService) {
+    this.cartItemCount$ = this.cartService.getTotalItems();
+  }
+
+  ngOnInit(): void {
+    // Không cần subscribe thủ công nếu dùng async pipe trong template
+    // this.cartSubscription = this.cartService.getTotalItems().subscribe(count => {
+    //   this.cartItemCount = count;
+    // });
+  }
+
+  ngOnDestroy(): void {
+    // Không cần unsubscribe nếu dùng async pipe
+    // if (this.cartSubscription) {
+    //   this.cartSubscription.unsubscribe();
+    // }
+  }
 
   isUser(): boolean {
     return this.authService.isUser(); // Gọi hàm từ AuthService

@@ -1,0 +1,46 @@
+<h2>Quản lý Tài khoản Người dùng</h2>
+
+<div *ngIf="errorMessage" class="alert alert-danger">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="isLoading" class="loading-indicator">
+  Đang tải danh sách người dùng...
+</div>
+
+<div *ngIf="!isLoading && !errorMessage">
+  <button class="btn btn-primary mb-3" (click) = "router.navigate(['/admin/services/create'])">Thêm Dịch Vụ Mới</button> <div *ngIf="services.length === 0" class="no-data-message">
+    Chưa có người dùng nào trong hệ thống.
+  </div>
+
+  <div *ngIf="services.length > 0" class="data-table">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tên dịch vụ</th>
+          <th>Nhóm dịch vụ</th>
+          <th>Mô tả</th>
+          <th>Thời lượng</th>
+          <th>Giá</th>
+          <th>IsActive</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let service of services">
+          <td>{{ service.serviceid }}</td>
+          <td>{{ service.name }}</td>
+          <td>{{ service.servicegroupid }}</td>
+          <td>{{ service.description || 'N/A' }}</td>
+          <td>{{ service.duration }}</td>
+          <td>{{ service.price ? 'Có' : 'Không' }}</td>
+          <td>{{ service.isactive}}</td>
+          <td>
+            <button class="btn btn-sm btn-warning" (click)="router.navigate(['/admin/services/edit', service.serviceid])">Sửa</button>
+            <button class="btn btn-sm btn-danger" >Xóa</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

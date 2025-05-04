@@ -1,0 +1,104 @@
+/* src/app/admin/order-management/order-management.component.css */
+/* Tái sử dụng hoặc điều chỉnh styles từ user-management.component.css */
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.loading-indicator {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+}
+
+.no-data-message {
+    text-align: center;
+    color: #666;
+    margin-top: 20px;
+}
+
+.data-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.data-table th, .data-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.data-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.data-table td button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    color: white;
+}
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Responsive table (tái sử dụng từ user-management) */
+@media (max-width: 600px) {
+    .data-table table, .data-table thead, .data-table tbody, .data-table th, .data-table td, .data-table tr {
+        display: block;
+    }
+    .data-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    .data-table tr { border: 1px solid #ccc; margin-bottom: 5px; }
+    .data-table td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+    .data-table td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        content: attr(data-label); /* Add data-label attribute to your td elements */
+        font-weight: bold;
+        text-align: left;
+    }
+    /* Add data-label attributes in HTML for responsive */
+    /* Example: <td data-label="ID Order">{{ order.orderId }}</td> */
+}

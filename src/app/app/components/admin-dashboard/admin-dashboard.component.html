@@ -1,69 +1,22 @@
-<div class="admin-dashboard">
+<div class="admin-dashboard-container">
     <h2>Admin Dashboard</h2>
 
-    <!-- Phần thống kê -->
-    <div class="stats">
-        <div class="card">
-            <div class="icon orange"><i class="fas fa-home"></i></div>
-            <div class="info">
-                <h3>120</h3>
-                <p>Nhà đang cho thuê</p>
-            </div>
-        </div>
-        <div class="card">
-            <div class="icon green"><i class="fas fa-dollar-sign"></i></div>
-            <div class="info">
-                <h3>$34,245</h3>
-                <p>Doanh thu tháng</p>
-            </div>
-        </div>
-        <div class="card">
-            <div class="icon red"><i class="fas fa-user-check"></i></div>
-            <div class="info">
-                <h3>15</h3>
-                <p>Yêu cầu cần duyệt</p>
-            </div>
-        </div>
-        <div class="card">
-            <div class="icon blue"><i class="fas fa-users"></i></div>
-            <div class="info">
-                <h3>245</h3>
-                <p>Người dùng</p>
-            </div>
-        </div>
+    <div class="admin-menu">
+        <nav>
+            <ul>
+                <li><a href="/admin/users" routerLinkActive="active">Quản lý Tài khoản</a></li>
+                <li><a href="/admin/bookings" routerLinkActive="active">Quản lý Lịch đặt</a></li>
+                <li><a href="/admin/orders" routerLinkActive="active">Quản lý Đơn hàng</a></li>
+                <li><a href="/admin/products" routerLinkActive="active">Quản lý Sản phẩm</a></li>
+                <li><a href="/admin/categories" routerLinkActive="active">Quản lý Danh mục</a></li>
+                <li><a href="/admin/services" routerLinkActive="active">Quản lý Dịch vụ</a></li>
+                <li><a href="/admin/staff" routerLinkActive="active">Quản lý Nhân viên</a></li>
+            </ul>
+        </nav>
     </div>
 
-    <!-- Biểu đồ -->
-    <div class="charts">
-        <canvas id="revenueChart"></canvas>
-        <canvas id="requestsChart"></canvas>
+    <div class="dashboard-overview">
+        <p>Chào mừng đến với trang quản lý Admin.</p>
     </div>
 
-    <!-- Danh sách yêu cầu cho thuê -->
-    <div class="requests">
-        <h3>Danh sách yêu cầu thuê nhà</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Tên</th>
-                    <th>Loại nhà</th>
-                    <th>Ngày yêu cầu</th>
-                    <th>Trạng thái</th>
-                    <th>Hành động</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let request of rentalRequests">
-                    <td>{{ request.name }}</td>
-                    <td>{{ request.type }}</td>
-                    <td>{{ request.date }}</td>
-                    <td>{{ request.status }}</td>
-                    <td>
-                        <button class="approve" (click)="approveRequest(request)">Duyệt</button>
-                        <button class="reject" (click)="rejectRequest(request)">Từ chối</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
 </div>

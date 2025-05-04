@@ -1,0 +1,89 @@
+<h2>Chi tiết & Cập nhật Lịch đặt</h2>
+
+<div *ngIf="errorMessage" class="alert alert-danger">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+</div>
+
+<div *ngIf="isLoading" class="loading-indicator">
+  Đang tải thông tin lịch đặt...
+</div>
+
+<div *ngIf="!isLoading && booking">
+  <div class="booking-details">
+    <p><strong>ID Booking:</strong> {{ booking.bookingId }}</p>
+    <p><strong>Khách hàng:</strong> {{ booking.customerName || 'N/A' }} (ID: {{ booking.customerId }})</p>
+    <p><strong>Đối tượng:</strong> {{ booking.subjectName || 'N/A' }} (ID: {{ booking.subjectId }})</p>
+    <p><strong>Ngày đặt:</strong> {{ booking.createdAt | date: 'short' }}</p>
+    </div>
+
+  <hr> <h3>Cập nhật Chi tiết Lịch đặt</h3>
+  <form (ngSubmit)="onSubmitBookingUpdate()" #bookingUpdateForm="ngForm">
+
+    <div class="form-group">
+      <label for="service">Dịch vụ:</label>
+      <select id="service" name="service" [(ngModel)]="bookingUpdatePayload.serviceId" required>
+        <option value="0" disabled>-- Chọn dịch vụ --</option>
+        <option *ngFor="let service of availableServices" [value]="service.serviceid">{{ service.name }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="staff">Nhân viên:</label>
+      <select id="staff" name="staff" [(ngModel)]="bookingUpdatePayload.staffId">
+        <option [value]="null">-- Chưa phân công --</option> <option *ngFor="let staff of availableStaff" [value]="staff.staffId">{{ staff.firstName }} {{ staff.lastName }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="scheduledStartTime">Thời gian bắt đầu dự kiến:</label>
+      <input type="datetime-local" id="scheduledStartTime" name="scheduledStartTime" [(ngModel)]="bookingUpdatePayload.scheduledStartTime" required>
+    </div>
+
+    <div class="form-group">
+      <label for="scheduledEndTime">Thời gian kết thúc dự kiến:</label>
+      <input type="datetime-local" id="scheduledEndTime" name="scheduledEndTime" [(ngModel)]="bookingUpdatePayload.scheduledEndTime" required>
+    </div>
+
+    <div class="form-group">
+      <label for="priceAtBooking">Giá:</label>
+      <input type="number" id="priceAtBooking" name="priceAtBooking" [(ngModel)]="bookingUpdatePayload.priceAtBooking" required min="0">
+    </div>
+
+     <div class="form-group">
+      <label for="address">Địa chỉ:</label>
+      <select id="address" name="address" [(ngModel)]="bookingUpdatePayload.addressId" required>
+        <option value="0" disabled>-- Chọn địa chỉ --</option>
+        <option *ngFor="let address of customerAddresses" [value]="address.addressid">
+            {{ address.street || '' }}, {{ address.ward || '' }}, {{ address.district || '' }}, {{ address.city || '' }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Trạng thái:</label>
+      <select id="status" name="status" [(ngModel)]="bookingUpdatePayload.statusId" required>
+        <option value="0" disabled>-- Chọn trạng thái --</option>
+        <option *ngFor="let status of bookingStatuses" [value]="status.statusId">{{ status.statusName }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="notes">Ghi chú:</label>
+      <textarea id="notes" name="notes" [(ngModel)]="bookingUpdatePayload.notes"></textarea>
+    </div>
+
+    <button type="submit" [disabled]="isSaving">
+      {{ isSaving ? 'Đang lưu...' : 'Cập nhật Lịch đặt' }}
+    </button>
+
+     <button type="button" (click)="router.navigate(['/admin/bookings'])">Quay lại danh sách</button>
+  </form>
+</div>
+
+<div *ngIf="!isLoading && !booking && !errorMessage">
+    <p>Không tìm thấy thông tin lịch đặt.</p>
+</div>

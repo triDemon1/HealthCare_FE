@@ -1,0 +1,41 @@
+<h2>Quản lý Đơn hàng</h2>
+
+<div *ngIf="errorMessage" class="alert alert-danger">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="isLoading" class="loading-indicator">
+  Đang tải danh sách đơn hàng...
+</div>
+
+<div *ngIf="!isLoading && !errorMessage">
+  <div *ngIf="orders.length === 0" class="no-data-message">
+    Chưa có đơn hàng nào trong hệ thống.
+  </div>
+
+  <div *ngIf="orders.length > 0" class="data-table">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Khách hàng</th>
+          <th>Trạng thái</th>
+          <th>Tổng tiền</th>
+          <th>Ngày đặt</th>
+          <th>Hành động</th> </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.orderId }}</td>
+          <td>{{ order.customerName || 'N/A' }} (ID: {{ order.customerId }})</td>
+          <td>{{ order.orderStatusName || 'N/A' }}</td>
+          <td>{{ order.totalAmount | currency:'VND':'symbol':'1.0-0' }}</td>
+          <td>{{ order.orderDate | date: 'shortDate' }}</td>
+          <td>
+            <button class="btn btn-sm btn-info" [routerLink]="['/admin/orders', order.orderId]">Xem/Sửa</button>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
