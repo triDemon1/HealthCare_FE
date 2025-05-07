@@ -1,0 +1,57 @@
+.payment-result-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .payment-result-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .payment-result-container p {
+    font-size: 16px;
+    color: #444;
+    margin: 10px 0;
+  }
+  
+  .error-message {
+    color: #d9534f;
+    background-color: #f2dede;
+    border: 1px solid #ebcccc;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 10px;
+  }
+  
+  button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 18px;
+    font-size: 15px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .payment-result-container .success-message {
+    color: #28a745;
+  }
+  
+  .payment-result-container .failure-message {
+    color: #dc3545;
+  }
+  

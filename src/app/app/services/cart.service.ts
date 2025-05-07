@@ -4,6 +4,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CartItem } from '../models/CartItem.interface';
 import { Product } from '../models/product.interface';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { PaymentInitiateResponse } from '../models/PaymentInitiateResponse .Interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +15,8 @@ import { Product } from '../models/product.interface';
 export class CartService {
   private cartItemsSource = new BehaviorSubject<CartItem[]>(this.getCartFromLocalStorage());
   cartItems$ = this.cartItemsSource.asObservable(); // Observable để các component theo dõi
-
-  constructor() { }
+  private apiUrlPayment = 'https://localhost:7064/api';
+  constructor(private http: HttpClient) { }
 
   private getCartFromLocalStorage(): CartItem[] {
     const cartJson = localStorage.getItem('shoppingCart');
@@ -90,9 +94,33 @@ export class CartService {
     );
   }
 
+
   // ----- Chức năng gọi API Thanh toán (Sẽ cần HttpClient) -----
-  // checkout(orderDetails: any): Observable<any> { // Thay 'any' bằng interface Order/Transaction phù hợp
-  //   const checkoutUrl = `${environment.apiUrl}/api/orders/checkout`; // Ví dụ URL API
-  //   return this.http.post(checkoutUrl, orderDetails);
-  // }
+  checkout(orderId: number): Observable<PaymentInitiateResponse> { // Thay 'any' bằng interface Order/Transaction phù hợp
+    const checkoutUrl = `${this.apiUrlPayment}/Payments/create-for-order`; // Ví dụ URL API
+    const body = {
+      orderId: orderId,
+      paymentMethodId: 1, // Hoặc ID phương thức thanh toán được chọn
+      ReturnUrl: '',
+      CancelUrl: ''
+    };
+    console.log('Calling API to create payment:', checkoutUrl, 'with body:', body);
+    return this.http.post<PaymentInitiateResponse>(checkoutUrl, body)
+      .pipe(catchError(this.handleError));
+  }
+  // Gọi API tạo đơn hàng (POST /api/orders/checkout)
+  createOrder(orderData: any): Observable<{ orderId: number, message: string }> { // Điều chỉnh kiểu trả về nếu cần
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        // Authorization: `Bearer ${this.authService.getToken()}` // Nếu API yêu cầu token
+      })
+    };
+    return this.http.post<{ orderId: number, message: string }>(`${this.apiUrlPayment}/orders/checkout`, orderData, httpOptions);
+  }
+  private handleError(error: any) {
+    console.error('API Error:', error);
+    // Trả về một thông báo lỗi thân thiện với người dùng hoặc throwError
+    return throwError(() => new Error('Đã xảy ra lỗi khi gọi API. Vui lòng thử lại.'));
+  }
 }

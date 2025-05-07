@@ -8,5 +8,6 @@ export interface BookingUpdateDto {
     addressId: number;
     statusId: number;
     notes?: string | null; // Allow null for notes
+    paymentStatusId?: number; // Có thể null nếu chưa có giao dịch liên quan
 }
 

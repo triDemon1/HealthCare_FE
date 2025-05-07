@@ -13,4 +13,5 @@ export interface LoginResponse {
   username: string;
   role: string; // Đây là role mà AuthService sẽ sử dụng
   customerid: number | undefined;
+  addressId:number | undefined;
 }

@@ -6,14 +6,14 @@
   Đang tải lịch sử đặt lịch...
 </div>
 
-<div *ngIf="!isLoading && !errorMessage">
+<div *ngIf="(pagedBookings$ | async) as pagedResult; else noBookingsOrLoading">
   <h2>Danh sách đặt lịch của bạn</h2>
 
-  <div *ngIf="bookings.length === 0" class="no-bookings-message">
+  <div *ngIf="pagedResult.items.length === 0" class="no-bookings-message">
     Bạn chưa có lịch đặt nào.
   </div>
 
-  <div *ngIf="bookings.length > 0" class="bookings-list">
+  <div *ngIf="pagedResult.items.length > 0" class="bookings-list">
     <table>
       <thead>
         <tr>
@@ -21,23 +21,65 @@
           <th>Dịch vụ</th>
           <th>Đối tượng</th>
           <th>Thời gian</th>
-          <th>Trạng thái</th>
+          <th>Trạng thái Booking</th>
+          <th>Trạng thái Thanh toán</th>
           <th>Giá</th>
           <th>Ngày đặt</th>
-          </tr>
+          <th>Hành động</th>
+        </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let booking of bookings">
+        <tr *ngFor="let booking of pagedResult.items">
           <td>{{ booking.bookingId }}</td>
           <td>{{ booking.serviceName }}</td>
-          <td>{{ booking.subjectName || 'N/A' }}</td> <td>
+          <td>{{ booking.subjectName || 'N/A' }}</td>
+          <td>
             {{ booking.scheduledStartTime | date: 'short' }} -
             {{ booking.scheduledEndTime | date: 'shortTime' }}
           </td>
           <td>{{ booking.statusName }}</td>
-          <td>{{ booking.priceAtBooking | currency:'VND':'symbol':'1.0-0' }}</td> <td>{{ booking.createdAt | date: 'shortDate' }}</td>
-          </tr>
+          <td>{{ booking.paymentStatusName || 'Chưa xác định' }}</td>
+          <td>{{ booking.priceAtBooking | currency:'VND':'symbol':'1.0-0' }}</td>
+          <td>{{ booking.createdAt | date: 'shortDate' }}</td>
+          <td>
+            <button *ngIf="shouldShowPayButton(booking)" class="btn btn-primary btn-sm"
+              (click)="proceedToPayment(booking.bookingId)">
+              {{ getPaymentButtonText(booking.paymentStatusName) }}
+            </button>
+            <span *ngIf="booking.paymentStatusName === 'Completed'">Đã thanh toán</span>
+            <span *ngIf="booking.paymentStatusName === 'Cancelled'" style="color: red;">Đã hủy thanh toán</span>
+          </td>
+        </tr>
       </tbody>
     </table>
+
+    <div *ngIf="pagedResult.totalPages > 1" class="pagination-controls mt-3">
+      <button class="btn btn-secondary"
+              (click)="goToPage(pagedResult.pageIndex - 1)"
+              [disabled]="isFirstPage(pagedResult)">
+          Trước
+      </button>
+
+      <ng-container *ngFor="let page of getPageNumbers(pagedResult)">
+        <button class="btn"
+                [class.btn-primary]="page === pagedResult.pageIndex"
+                [class.btn-outline-primary]="page !== pagedResult.pageIndex"
+                (click)="goToPage(page)">
+            {{ page + 1 }} </button>
+      </ng-container>
+
+      <button class="btn btn-secondary"
+              (click)="goToPage(pagedResult.pageIndex + 1)"
+              [disabled]="isLastPage(pagedResult)">
+          Sau
+      </button>
+
+      <span class="ms-3">
+          Tổng số: {{ pagedResult.totalCount }} lịch đặt
+      </span>
+    </div>
   </div>
 </div>
+
+<ng-template #noBookingsOrLoading>
+    </ng-template>

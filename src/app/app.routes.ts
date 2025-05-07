@@ -12,6 +12,8 @@ import { ChildCareComponent } from './app/components/child-care/child-care.compo
 import { PetCareComponent } from './app/components/pet-care/pet-care.component';
 import { CartComponent } from './app/components/cart/cart.component';
 import { ProductComponent } from './app/components/product/product.component';
+import { PaymentReturnComponent } from './app/components/payment-return/payment-return.component';
+import { PaymentComponent } from './app/components/payment/payment.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', component: HomeComponent },
@@ -27,6 +29,10 @@ export const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'products', component: ProductComponent },
   { path: 'products/:categoryId', component: ProductComponent },
+  { path: 'payment/success', component: PaymentReturnComponent }, // Route cho trang thành công
+  { path: 'payment/failed', component: PaymentReturnComponent }, // Route cho trang thất bại (có thể dùng chung)
+  { path: 'payment/cancelled', component: PaymentReturnComponent },
+  { path: 'payment/:bookingId', component: PaymentComponent },
   {
     path: 'elder-care/medical-care',
     loadChildren: () =>

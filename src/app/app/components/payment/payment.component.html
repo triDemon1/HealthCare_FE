@@ -1,0 +1,49 @@
+<div class="payment-container">
+    <h2>Thông tin Booking và Thanh toán</h2>
+  
+    <div *ngIf="isLoadingBooking" class="loading-indicator">
+      Đang tải thông tin Booking...
+    </div>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  
+    <div *ngIf="booking && !isLoadingBooking && !errorMessage">
+      <h3>Chi tiết Booking #{{ booking.bookingId }}</h3>
+      <p><strong>Dịch vụ:</strong> {{ booking.serviceName }}</p>
+      <p><strong>Đối tượng:</strong> {{ booking.subjectName }}</p>
+      <p><strong>Thời gian dự kiến:</strong> {{ booking.scheduledStartTime | date: 'short' }}</p>
+      <p><strong>Tổng tiền:</strong> {{ booking.priceAtBooking | currency:'VND':'symbol':'1.0-0' }}</p>
+      <p><strong>Trạng thái Booking:</strong> {{ booking.statusName }}</p>
+      <p><strong>Trạng thái Thanh toán:</strong> {{ booking.paymentStatusName || 'Chưa xác định' }}</p>
+  
+  
+      <div *ngIf="isBookingCancelled" class="info-message">
+           <p>Booking này đã bị hủy. Không thể thanh toán.</p>
+       </div>
+  
+      <div *ngIf="isPaymentCompleted && !isBookingCancelled" class="success-message">
+        <p>Booking này đã được thanh toán thành công.</p>
+      </div>
+  
+      <div *ngIf="isPaymentFailed && !isBookingCancelled" class="error-message">
+           <p>Thanh toán thất bại. Vui lòng thử lại.</p>
+       </div>
+       <div *ngIf="isPaymentCancelledByUser && !isBookingCancelled" class="info-message">
+           <p>Thanh toán đã bị hủy bởi bạn.</p>
+       </div>
+  
+  
+       <div *ngIf="!isLoadingBooking && !processingPayment && !isBookingCancelled && !isPaymentCompleted">
+        <button (click)="proceedToPayment()" [disabled]="processingPayment">
+            {{ processingPayment ? 'Đang chuyển hướng...' : 'Thanh toán ngay' }}
+        </button>
+    </div>
+  
+  
+    </div>
+  
+    <button (click)="goBack()" class="back-button">Quay lại Lịch sử đặt lịch</button>
+  
+  </div>

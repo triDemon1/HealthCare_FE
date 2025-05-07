@@ -13,5 +13,7 @@ export interface BookingDto {
     priceAtBooking: number; // Use number for decimal from backend
     notes?: string; // Use ? because it's nullable
     createdAt: string; // Use string for date/time from API
+    paymentStatusId?: number | null; // Có thể null nếu chưa có giao dịch liên quan
+    paymentStatusName?: string; // Tên trạng thái thanh toán (Pending, Completed, Failed)
     // Add other fields if you added them in the backend DTO
 }

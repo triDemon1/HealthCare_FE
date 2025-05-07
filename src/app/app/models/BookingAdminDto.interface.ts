@@ -11,4 +11,6 @@ export interface BookingAdminDto extends BookingDto {
     addressDistrict?: string;
     addressCity?: string;
     addressCountry?: string;
+    paymentStatusId?: number;
+    paymentStatusName?: string;
 }

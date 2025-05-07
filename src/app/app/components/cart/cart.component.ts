@@ -5,6 +5,9 @@ import { CartService } from '../../services/cart.service';
 import { CartItem } from '../../models/CartItem.interface';
 import { Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms'; // Import FormsModule để dùng [(ngModel)]
+import { AuthService } from '../../auth/auth.service';
+import { Router } from '@angular/router';
+import { PaymentInitiateResponse } from '../../models/PaymentInitiateResponse .Interface';
 
 @Component({
   selector: 'app-cart',
@@ -15,8 +18,9 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule để dùng 
 export class CartComponent {
   cartItems$: Observable<CartItem[]>;
   totalAmount$: Observable<number>;
+  isLoading: boolean = false; // Thêm biến để quản lý trạng thái loading
 
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService, private authService: AuthService, private router: Router) {
     this.cartItems$ = this.cartService.cartItems$; // Lấy observable từ service
     this.totalAmount$ = this.cartService.getTotalAmount(); // Lấy observable tổng tiền
   }
@@ -64,35 +68,60 @@ export class CartComponent {
     }
 
     // 2. (Tùy chọn) Kiểm tra đăng nhập
-    // if (!this.authService.isLoggedIn()) {
-    //   this.router.navigate(['/login'], { queryParams: { returnUrl: '/checkout' } }); // Chuyển hướng đến đăng nhập
-    //   return;
-    // }
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login'], { queryParams: { returnUrl: '/checkout' } }); // Chuyển hướng đến đăng nhập
+      return;
+    }
 
-    // 3. Tạo đối tượng đơn hàng/giao dịch để gửi lên backend
-    // const orderData = {
-    //   customerId: this.authService.getCurrentUserId(), // Lấy ID khách hàng đã đăng nhập
-    //   items: items.map(item => ({ productId: item.productId, quantity: item.quantity })),
-    //   // Thêm các thông tin khác nếu cần: địa chỉ giao hàng, phương thức thanh toán...
-    // };
+    const orderPayload = {
+      addressId: this.authService.getAddressId(), // CẦN CÓ ADDRESS ID
+      items: items.map(item => ({
+        productId: item.productId,
+        quantity: item.quantity
+      }))
+    };
 
-    // 4. Gọi API thanh toán (ví dụ)
-    // this.cartService.checkout(orderData).subscribe({
-    //   next: (response) => {
-    //     console.log('Checkout successful:', response);
-    //     alert('Đặt hàng thành công!');
-    //     this.cartService.clearCart(); // Xóa giỏ hàng sau khi thành công
-    //     // Chuyển hướng đến trang xác nhận đơn hàng
-    //     // this.router.navigate(['/order-confirmation', response.orderId]);
-    //   },
-    //   error: (err) => {
-    //     console.error('Checkout failed:', err);
-    //     alert('Đặt hàng thất bại. Vui lòng thử lại.');
-    //   }
-    // });
+    // 4. Gọi API để tạo đơn hàng (Order) trên backend
+    this.cartService.createOrder(orderPayload).subscribe({
+      next: async (orderResponse) => { // Thêm async ở đây
+        console.log('Order created successfully:', orderResponse);
+        if (orderResponse && orderResponse.orderId) {
+          // 5. Nếu tạo đơn hàng thành công, tiến hành tạo thanh toán MoMo
 
-    // Hiện tại chỉ điều hướng đến trang checkout giả định
-    alert('Chuyển đến trang thanh toán (Demo)');
-    // this.router.navigate(['/checkout']); // Điều hướng đến trang checkout thực tế
+          this.cartService.checkout(orderResponse.orderId).subscribe({
+            next: (paymentResponse: PaymentInitiateResponse) => {
+              if (paymentResponse.success && paymentResponse.paymentUrl) {
+                console.log('Create payment successful, redirecting to MoMo:', paymentResponse.paymentUrl);
+                this.cartService.clearCart(); // Xóa giỏ hàng sau khi đã tạo yêu cầu thanh toán
+                window.location.href = paymentResponse.paymentUrl; // Chuyển hướng người dùng đến trang MoMo
+              } else {
+                alert(`Khởi tạo thanh toán MoMo thất bại: ${paymentResponse.message || 'Lỗi không xác định.'}`);
+                console.error('Create payment failed:', paymentResponse);
+              }
+              this.isLoading = false; // Kết thúc loading
+            },
+            error: (paymentErr) => {
+              console.error('Create payment API call failed:', paymentErr);
+              alert('Lỗi khi gọi API tạo thanh toán. Vui lòng thử lại.');
+              this.isLoading = false; // Kết thúc loading
+            }
+          });
+        } else {
+          alert('Tạo đơn hàng thất bại: Không nhận được Order ID.');
+          this.isLoading = false; // Kết thúc loading
+        }
+      },
+      error: (orderErr) => {
+        console.error('Create order API call failed:', orderErr);
+        let errorMessage = 'Đặt hàng thất bại. Vui lòng thử lại.';
+        if (orderErr.error && orderErr.error.message) {
+            errorMessage = orderErr.error.message;
+        } else if (typeof orderErr.error === 'string') {
+            errorMessage = orderErr.error;
+        }
+        alert(errorMessage);
+        this.isLoading = false; // Kết thúc loading
+      }
+    });
   }
 }

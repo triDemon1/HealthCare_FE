@@ -72,6 +72,14 @@
     </div>
 
     <div class="form-group">
+      <label for="status">Trạng thái thanh toán:</label>
+      <select id="status" name="status" [(ngModel)]="bookingUpdatePayload.paymentStatusId" required>
+        <option value="0" disabled>-- Chọn trạng thái --</option>
+        <option *ngFor="let payment of paymentStatuses" [value]="payment.paymentstatusid">{{ payment.statusname }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
       <label for="notes">Ghi chú:</label>
       <textarea id="notes" name="notes" [(ngModel)]="bookingUpdatePayload.notes"></textarea>
     </div>

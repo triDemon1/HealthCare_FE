@@ -1,0 +1,23 @@
+<div class="payment-result-container">
+    <h2>Kết quả Thanh toán</h2>
+
+    <div *ngIf="transactionId">
+        <p>Mã giao dịch nội bộ: {{ transactionId }}</p>
+    </div>
+
+    <p>{{ paymentStatus }}</p>
+
+    <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+    </div>
+
+    <div *ngIf="paymentStatus.includes('thành công')">
+        <p>Cảm ơn bạn đã sử dụng dịch vụ!</p>
+        <button (click)="router.navigate(['/'])" routerLinkActive="active">Quay về Trang chủ</button>
+    </div>
+
+    <div *ngIf="paymentStatus.includes('thất bại') || paymentStatus.includes('hủy')">
+        <button (click)="router.navigate(['/'])" >Quay về Trang chủ</button>
+    </div>
+
+</div>

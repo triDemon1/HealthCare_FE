@@ -12,6 +12,7 @@ import { Service } from '../../../../models/services.interface';
 import { StaffAdminDetailDto } from '../../../../models/userAdminDto';
 import { CustomerAddress } from '../../../../models/customerAddress.interface';
 import { BookingService } from '../../../../services/booking.service';
+import { PaymentStatus } from '../../../../models/paymentStatus.interface';
 
 @Component({
   standalone: true,
@@ -34,10 +35,11 @@ export class BookingEditComponent implements OnInit {
     priceAtBooking: 0,
     addressId: 0,
     statusId: 0,
-    notes: null
+    notes: null,
+    paymentStatusId: 0
   };
 
-
+  paymentStatuses: PaymentStatus[] = []; // For status dropdown
   bookingStatuses: BookingStatusDto[] = []; // For status dropdown
   availableServices: Service[] = []; // For service dropdown
   availableStaff: StaffAdminDetailDto[] = []; // For staff dropdown
@@ -87,7 +89,8 @@ export class BookingEditComponent implements OnInit {
                   priceAtBooking: this.booking.priceAtBooking,
                   addressId: this.booking.addressId,
                   statusId: this.booking.statusId,
-                  notes: this.booking.notes
+                  notes: this.booking.notes,
+                  paymentStatusId: this.booking.paymentStatusId,
               };
 
               // Now load dropdown data based on the booking's customerId
@@ -114,6 +117,12 @@ export class BookingEditComponent implements OnInit {
           next: (data) => this.bookingStatuses = data,
           error: (err) => console.error('Error fetching booking statuses:', err)
       });
+
+      // Load all PaymentStatuses
+      this.bookingService.getAllPaymentStatus().subscribe({
+        next: (data) => this.paymentStatuses = data,
+        error: (err) => console.error('Error fetching services:', err)
+    });
 
       // Load all Services
       this.bookingService.getAllServices().subscribe({
@@ -180,7 +189,8 @@ export class BookingEditComponent implements OnInit {
              priceAtBooking: updatedBooking.priceAtBooking,
              addressId: updatedBooking.addressId,
              statusId: updatedBooking.statusId,
-             notes: updatedBooking.notes
+             notes: updatedBooking.notes,
+             paymentStatusId: updatedBooking.paymentStatusId
         };
         this.isSaving = false;
       },

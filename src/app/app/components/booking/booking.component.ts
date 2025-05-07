@@ -10,7 +10,10 @@ import { BookingService } from '../../services/booking.service';
 import { AuthService } from '../../auth/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { BookingAdminDto } from '../../models/BookingAdminDto.interface';
+import { BookingDto } from '../../models/BookingDto.interface';
 import { NgForm } from '@angular/forms';
+import { PaymentInitiateResponse } from '../../models/PaymentInitiateResponse .Interface';
 @Component({
   standalone: true,
   selector: 'app-booking',
@@ -224,6 +227,7 @@ export class BookingComponent implements OnInit {
     });
   }
 
+
   resetSubjectData(): void {
     this.subjectData = {
       name: '',
@@ -242,14 +246,16 @@ export class BookingComponent implements OnInit {
     this.existingSubjects = [];
     this.resetSubjectData();
     this.bookingData = {
-      customerId: 0, // *** Cần lấy customerId của người dùng đang đăng nhập ***
+      customerId: this.authService.getCustomerId() || 0, // Lấy lại customerId
       addressId: '' as number | string,
       serviceId: '' as number | string,
       scheduledStartTime: '',
       scheduledEndTime: '',
       priceAtBooking: 0,
       notes: '',
-      subjectId: undefined as number | undefined // ID của subject nếu chọn từ danh sách đã có
-    }; // Reset booking data về giá trị ban đầu
+      subjectId: undefined as number | undefined
+    };
+    this.errorMessage = null;
+    this.successMessage = null;
   }
 }

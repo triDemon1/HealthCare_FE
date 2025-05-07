@@ -67,6 +67,9 @@ export class AuthService {
   getCustomerId(): number | undefined {
     return this.currentUser?.customerid;
   }
+  getAddressId():number | undefined {
+    return this.currentUser?.addressId;
+  }
 
   // Lấy Role từ thông tin user đã lưu
   getRole(): string | null {

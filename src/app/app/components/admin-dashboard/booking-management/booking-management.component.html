@@ -23,6 +23,7 @@
                     <th>Đối tượng</th>
                     <th>Thời gian</th>
                     <th>Trạng thái</th>
+                    <th>Trạng thái thanh toán</th>
                     <th>Giá</th>
                     <th>Ngày đặt</th>
                     <th>Hành động</th>
@@ -39,6 +40,7 @@
                         {{ booking.scheduledEndTime | date: 'shortTime' }}
                     </td>
                     <td>{{ booking.statusName || 'N/A' }}</td>
+                    <td>{{ booking.paymentStatusName || 'Chưa thanh toán' }}</td>
                     <td>{{ booking.priceAtBooking | currency:'VND':'symbol':'1.0-0' }}</td>
                     <td>{{ booking.createdAt | date: 'shortDate' }}</td>
                     <td>
