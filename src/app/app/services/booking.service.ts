@@ -75,21 +75,38 @@ export class BookingService {
     return this.http.post<PaymentInitiateResponse>(paymentUrl, body)
       .pipe(catchError(this.handleError));
   }
-  // --- UPDATED: Hàm để gọi API lấy danh sách booking của khách hàng với phân trang ---
-  getCustomerBookings(customerId: number, pageIndex: number, pageSize: number): Observable<Pagination<BookingDto>> {
-    let params = new HttpParams();
-    params = params.append('pageIndex', pageIndex.toString());
-    params = params.append('pageSize', pageSize.toString());
 
-    const url = `${this.apiUrl}/customers/${customerId}/bookings`;
-    console.log('Calling API:', url, 'with params:', params.toString()); // Log để debug URL và params
-    return this.http.get<Pagination<BookingDto>>(url, { params })
-      .pipe(catchError(this.handleError)); // Sử dụng lại hàm xử lý lỗi đã có
-  }
   getBookingById(bookingId: number): Observable<BookingDto> {
     const url = `${this.apiUrl}/bookings/${bookingId}`; // Giả định API endpoint là /api/Booking/bookings/{bookingId}
     console.log('Calling API to get booking by ID:', url);
     return this.http.get<BookingDto>(url)
+      .pipe(catchError(this.handleError));
+  }
+
+   // Phương thức mới để gọi API hủy booking
+   cancelBooking(bookingId: number): Observable<any> {
+    const url = `${this.apiUrl}/cancel/${bookingId}`;
+    console.log('Calling API to cancel booking:', url);
+    // Sử dụng put hoặc post tùy thuộc vào cách bạn thiết lập ở backend
+    return this.http.put<any>(url, {}) // Gửi body rỗng nếu backend không cần dữ liệu cụ thể
+      .pipe(catchError(this.handleError));
+  }
+
+  // --- UPDATED: Hàm để gọi API lấy danh sách booking của khách hàng với phân trang và tìm kiếm ---
+  getCustomerBookings(customerId: number, pageIndex: number, pageSize: number, searchTerm: string | null = null): Observable<Pagination<BookingDto>> {
+    let params = new HttpParams();
+    params = params.append('pageIndex', pageIndex.toString());
+    params = params.append('pageSize', pageSize.toString());
+
+    // Thêm tham số tìm kiếm nếu có
+    if (searchTerm) {
+      params = params.append('searchTerm', searchTerm);
+    }
+
+
+    const url = `${this.apiUrl}/customers/${customerId}/bookings`;
+    console.log('Calling API:', url, 'with params:', params.toString());
+    return this.http.get<Pagination<BookingDto>>(url, { params })
       .pipe(catchError(this.handleError));
   }
 

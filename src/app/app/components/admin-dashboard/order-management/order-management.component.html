@@ -22,7 +22,8 @@
           <th>Trạng thái</th>
           <th>Tổng tiền</th>
           <th>Ngày đặt</th>
-          <th>Hành động</th> </tr>
+          <th>Hành động</th>
+        </tr>
       </thead>
       <tbody>
         <tr *ngFor="let order of orders">
@@ -37,5 +38,16 @@
         </tr>
       </tbody>
     </table>
+
+    <div class="pagination-controls">
+      <button (click)="prevPage()" [disabled]="currentPage === 0" class="btn btn-secondary btn-sm">Trang trước</button>
+      <span>Trang {{ currentPage + 1 }} / {{ totalPages }} (Tổng: {{ totalItems }} mục)</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages - 1" class="btn btn-secondary btn-sm">Trang sau</button>
+
+      <label for="pageSize" class="ml-3">Mục trên trang:</label>
+      <select id="pageSize" [(ngModel)]="pageSize" (change)="onPageSizeChange()" class="form-control-sm">
+        <option *ngFor="let size of pageSizes" [value]="size">{{ size }}</option>
+      </select>
+    </div>
   </div>
 </div>

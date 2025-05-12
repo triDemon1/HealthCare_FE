@@ -1,0 +1,161 @@
+/* Basic styling for product detail form */
+.product-details-container {
+    margin-top: 20px;
+}
+
+.card {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+    border-bottom: 1px solid #e0e0e0;
+    font-weight: bold;
+    display: flex;
+    /* Use flexbox to align header and button */
+    justify-content: space-between;
+    /* Space out header text and button */
+    align-items: center;
+    /* Vertically align items */
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-body p {
+    margin-bottom: 8px;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    /* Labels on their own line */
+    margin-bottom: .5rem;
+    font-weight: bold;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+}
+
+textarea.form-control {
+    min-height: 80px;
+    /* Give textarea some height */
+}
+
+.product-image-preview {
+    max-width: 200px;
+    /* Limit image preview size */
+    height: auto;
+    display: block;
+    /* Image on its own line */
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    padding: 5px;
+    background-color: #fff;
+}
+
+
+.loading-indicator {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.mr-2 {
+    margin-right: .5rem !important;
+}
+
+.float-right {
+    float: right !important;
+    /* Use float for button alignment in header */
+}
+
+/* Clear float if needed in parent container */
+/* .card-header::after {
+      content: "";
+      display: table;
+      clear: both;
+  } */
+
+/* Basic Button Styles (if not using a framework like Bootstrap) */
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.btn-sm {
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-secondary {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}

@@ -117,6 +117,36 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./app/components/admin-dashboard/service-management/service-management.route').then(m => m.serviceManagementRoutes)
   },
+  {
+    path: 'admin/orders',
+    loadChildren: () =>
+      import('./app/components/admin-dashboard/order-management/order-management.route').then(m => m.orderManagementRoutes)
+  },
+  {
+    path: 'admin/orders/:orderId',
+    loadChildren: () =>
+      import('./app/components/admin-dashboard/order-management/order-management.route').then(m => m.orderEditRoutes)
+  },
+  {
+    path: 'admin/products',
+    loadChildren: () =>
+      import('./app/components/admin-dashboard/product-management/product-management.route').then(m => m.productManagementRoutes)
+  },
+  {
+    path: 'admin/products/new',
+    loadChildren: () =>
+      import('./app/components/admin-dashboard/product-management/product-management.route').then(m => m.productEditRoutes)
+  },
+  {
+    path: 'admin/products-category/:categoryId',
+    loadChildren: () =>
+      import('./app/components/admin-dashboard/product-management/product-management.route').then(m => m.productManagementRoutes)
+  },
+  {
+    path: 'admin/products/:productId',
+    loadChildren: () =>
+      import('./app/components/admin-dashboard/product-management/product-management.route').then(m => m.productEditRoutes)
+  },
 ];
 
 export default routes;

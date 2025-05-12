@@ -125,7 +125,7 @@ export class AdminService {
   }
 
    getAllOrderStatus(): Observable<OrderStatusDto[]> {
-    return this.http.get<OrderStatusDto[]>(`${this.apiUrlOrder}/admin/orderstatuses`)
+    return this.http.get<OrderStatusDto[]>(`${this.apiUrlRole}/admin/orderstatuses`)
       .pipe(catchError(this.handleError));
   }
 

@@ -2,6 +2,7 @@ export interface OrderAdminDto {
     orderId: number;
     customerId: number;
     customerName: string;
+    phoneNumber?: string;
     orderStatusId: number;
     orderStatusName: string;
     addressId: number;

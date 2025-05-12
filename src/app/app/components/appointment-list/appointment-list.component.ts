@@ -6,8 +6,10 @@ import { BookingService } from '../../services/booking.service';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 import { Pagination } from '../../models/pagination.interface';
+import { debounceTime } from 'rxjs';
 // Import các thành phần từ RxJS
 import { Observable, BehaviorSubject, Subscription, catchError, of, switchMap, tap, startWith } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs';
 
 
 @Component({
@@ -25,6 +27,9 @@ export class AppointmentListComponent implements OnInit, OnDestroy {
   isLoading = true; // Trạng thái loading ban đầu
   errorMessage: string | null = null;
   customerId: number | undefined; // Lưu customerId đã lấy từ AuthService
+  // Biến cho tìm kiếm
+  searchTerm: string = ''; // Biến lưu giá trị thanh tìm kiếm
+  private searchTerms = new BehaviorSubject<string>('');
 
   // Trạng thái phân trang (sẽ được quản lý bởi BehaviorSubject)
   // Sử dụng biến nội bộ để lưu trữ state hiện tại
@@ -33,10 +38,11 @@ export class AppointmentListComponent implements OnInit, OnDestroy {
 
   // BehaviorSubject để chủ động kích hoạt việc tải lại dữ liệu
   // Khi pageIndex hoặc pageSize thay đổi, chúng ta sẽ next() giá trị mới vào Subject này
-  private paginationParamsSubject = new BehaviorSubject<{ pageIndex: number, pageSize: number, customerId: number | undefined }>({
+  private paginationParamsSubject = new BehaviorSubject<{ pageIndex: number, pageSize: number, customerId: number | undefined, searchTerm: string }>({
     pageIndex: this._pageIndex,
     pageSize: this._pageSize,
-    customerId: undefined // customerId sẽ được cập nhật sau trong ngOnInit
+    customerId: undefined, // customerId sẽ được cập nhật sau trong ngOnInit
+    searchTerm: ''
   });
 
   // Subscription để theo dõi kết quả từ pagedBookings$ nếu cần (optional)
@@ -55,66 +61,64 @@ export class AppointmentListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Kiểm tra customerId trước khi thiết lập pipeline
     if (this.customerId === undefined || this.customerId <= 0) {
-       this.isLoading = false; // Tắt loading nếu không có customerId hợp lệ
-       this.errorMessage = "Thông tin khách hàng không khả dụng. Vui lòng đăng nhập lại.";
-       console.error("CustomerId is not set or invalid.");
-       this.pagedBookings$ = of({ items: [], totalCount: 0, pageIndex: 0, pageSize: this._pageSize, totalPages: 0, hasPreviousPage: false, hasNextPage: false });
-       return; // Dừng nếu không có customerId hợp lệ
+      this.isLoading = false; // Tắt loading nếu không có customerId hợp lệ
+      this.errorMessage = "Thông tin khách hàng không khả dụng. Vui lòng đăng nhập lại.";
+      console.error("CustomerId is not set or invalid.");
+      this.pagedBookings$ = of({ items: [], totalCount: 0, pageIndex: 0, pageSize: this._pageSize, totalPages: 0, hasPreviousPage: false, hasNextPage: false });
+      return; // Dừng nếu không có customerId hợp lệ
     }
 
     // Cập nhật customerId trong Subject lần đầu tiên
     // Điều này sẽ kích hoạt pipeline lần đầu tiên
-     this.paginationParamsSubject.next({
-       pageIndex: this._pageIndex,
-       pageSize: this._pageSize,
-       customerId: this.customerId // Sử dụng customerId đã lấy
-     });
+    this.paginationParamsSubject.next({
+      pageIndex: this._pageIndex,
+      pageSize: this._pageSize,
+      customerId: this.customerId, // Sử dụng customerId đã lấy
+      searchTerm: this.searchTerm
+    });
 
 
     // Thiết lập pipeline reactive để tải dữ liệu
     this.pagedBookings$ = this.paginationParamsSubject.asObservable().pipe(
-       // startWith({ pageIndex: this._pageIndex, pageSize: this._pageSize, customerId: this.customerId }), // Có thể dùng startWith thay cho next() ban đầu
-       tap(() => {
-         this.isLoading = true; // Bật loading trước khi gọi API
-         this.errorMessage = null; // Xóa lỗi cũ
-         console.log('Fetching bookings for customer:', this.customerId, 'Page:', this._pageIndex, 'Size:', this._pageSize);
-       }),
+      tap(params => {
+        this.isLoading = true;
+        this.errorMessage = null;
+        console.log('Fetching bookings for customer:', params.customerId, 'Page:', params.pageIndex, 'Size:', params.pageSize, 'Search:', params.searchTerm);
+      }),
       switchMap(params => {
-        // Gọi service để lấy dữ liệu phân trang
-        // Đảm bảo params.customerId không undefined ở đây (đã kiểm tra trong ngOnInit)
-        // Service getCustomerBookings đã được cập nhật để nhận pageIndex và pageSize
-        return this.bookingService.getCustomerBookings(params.customerId!, params.pageIndex, params.pageSize).pipe(
+        return this.bookingService.getCustomerBookings(params.customerId!, params.pageIndex, params.pageSize, params.searchTerm).pipe(
           tap(result => {
             console.log("Phản hồi dữ liệu phân trang:", result);
-            this.isLoading = false; // Tắt loading khi có dữ liệu
+            this.isLoading = false;
           }),
           catchError(err => {
             console.error('Error fetching paged bookings:', err);
             this.errorMessage = 'Không thể tải danh sách lịch đặt. Vui lòng thử lại.';
-            this.isLoading = false; // Tắt loading khi có lỗi
-            // Trả về một Observable rỗng với cấu trúc Pagination để template không bị lỗi async pipe
+            this.isLoading = false;
             return of({ items: [], totalCount: 0, pageIndex: params.pageIndex, pageSize: params.pageSize, totalPages: 0, hasPreviousPage: false, hasNextPage: false });
           })
         );
       })
-      // Nếu cần xử lý kết quả sau switchMap, thêm các toán tử khác ở đây
-      // tap(pagedResult => { ... })
     );
 
-    // Optional: Subscribe nếu bạn cần thực hiện side-effects khi dữ liệu thay đổi
-    // Ví dụ: lưu tổng số trang vào một biến riêng nếu cần logic phức tạp ngoài template
-    // this.pagedBookingsSubscription = this.pagedBookings$.subscribe(pagedResult => {
-    //    // this.totalPages = pagedResult.totalPages; // Ví dụ
-    // });
+    this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(term => console.log('Search term changed:', term))
+    ).subscribe(term => {
+      this._pageIndex = 0;
+      this.paginationParamsSubject.next({
+        pageIndex: this._pageIndex,
+        pageSize: this._pageSize,
+        customerId: this.customerId,
+        searchTerm: term
+      });
+    });
   }
 
   ngOnDestroy(): void {
     // Đảm bảo BehaviorSubject được complete khi component bị hủy
     this.paginationParamsSubject.complete();
-    // Optional: Hủy subscribe nếu bạn đã subscribe tường minh ở trên
-    // if (this.pagedBookingsSubscription) {
-    //   this.pagedBookingsSubscription.unsubscribe();
-    // }
   }
 
   // Cập nhật hàm goToPage để thay đổi Subject thay vì gọi service trực tiếp
@@ -125,56 +129,77 @@ export class AppointmentListComponent implements OnInit, OnDestroy {
     // Kiểm tra pageIndex hợp lệ và customerId tồn tại
     // Kiểm tra totalPages sẽ được làm trong template bằng async pipe hoặc trong getter
     if (pageIndex >= 0 && currentCustomerId !== undefined && currentCustomerId > 0) {
-       this._pageIndex = pageIndex; // Cập nhật biến nội bộ
+      this._pageIndex = pageIndex; // Cập nhật biến nội bộ
 
-       // Kích hoạt lại pipeline bằng cách gửi giá trị mới vào Subject
-       this.paginationParamsSubject.next({
-         pageIndex: this._pageIndex,
-         pageSize: this._pageSize,
-         customerId: currentCustomerId // Truyền customerId cố định
-       });
+      // Kích hoạt lại pipeline bằng cách gửi giá trị mới vào Subject
+      this.paginationParamsSubject.next({
+        pageIndex: this._pageIndex,
+        pageSize: this._pageSize,
+        customerId: currentCustomerId, // Truyền customerId cố định
+        searchTerm: this.searchTerm
+      });
     }
   }
 
-   // Getter đơn giản để lấy pageIndex hiện tại cho template (không cần theo dõi reactive)
-   // Template có thể dùng (pagedBookings$ | async)?.pageIndex thay thế
-   get pageIndex(): number {
-      return this._pageIndex;
-   }
+  get pageIndex(): number {
+    return this._pageIndex;
+  }
+  get pageSize(): number {
+    return this._pageSize;
+  }
 
-   // Getter đơn giản để lấy pageSize hiện tại cho template (không cần theo dõi reactive)
-   // Template có thể dùng (pagedBookings$ | async)?.pageSize thay thế
-    get pageSize(): number {
-        return this._pageSize;
-    }
-
-
-  // Các hàm trợ giúp kiểm tra trạng thái trang và lấy số trang hiển thị
-  // Các hàm này sẽ nhận pagedResult từ template thông qua async pipe
   isFirstPage(pagedResult: Pagination<BookingDto> | null): boolean {
-     // Kiểm tra pagedResult có tồn tại và pageIndex
-     return pagedResult ? pagedResult.pageIndex === 0 : true;
+    // Kiểm tra pagedResult có tồn tại và pageIndex
+    return pagedResult ? pagedResult.pageIndex === 0 : true;
   }
 
   isLastPage(pagedResult: Pagination<BookingDto> | null): boolean {
-     // Kiểm tra pagedResult có tồn tại và pageIndex, totalPages
-     return pagedResult ? pagedResult.pageIndex === pagedResult.totalPages - 1 : true;
+    // Kiểm tra pagedResult có tồn tại và pageIndex, totalPages
+    return pagedResult ? pagedResult.pageIndex === pagedResult.totalPages - 1 : true;
   }
 
   // Hàm getPageNumbers vẫn giữ nguyên logic đơn giản trả về mảng số trang (0-based index)
-   getPageNumbers(pagedResult: Pagination<BookingDto> | null): number[] {
-     if (!pagedResult || pagedResult.totalPages <= 0) {
-       return [];
-     }
-     return Array.from({ length: pagedResult.totalPages }, (_, i) => i);
-   }
+  getPageNumbers(pagedResult: Pagination<BookingDto> | null): number[] {
+    if (!pagedResult || pagedResult.totalPages <= 0) {
+      return [];
+    }
+    return Array.from({ length: pagedResult.totalPages }, (_, i) => i);
+  }
 
-  // Getter để truy cập an toàn mảng items cho template
-  // Template sẽ dùng (pagedBookings$ | async)?.items
-  // Getter này có thể không cần thiết nếu template dùng async pipe đúng cách
-  // get bookingItems(): BookingDto[] {
-  //     return this.pagedBookings$ ? (this.pagedBookings$ | async)?.items || [] : [];
-  // }
+  cancelBooking(bookingId: number): void {
+    if (confirm('Bạn có chắc chắn muốn hủy lịch đặt này không?')) {
+      this.isLoading = true;
+      this.errorMessage = null;
+
+      this.bookingService.cancelBooking(bookingId).subscribe({
+        next: (response) => {
+          console.log('Booking cancelled successfully:', response);
+          this.paginationParamsSubject.next({
+            pageIndex: this._pageIndex,
+            pageSize: this._pageSize,
+            customerId: this.customerId,
+            searchTerm: this.searchTerm
+          });
+          alert('Lịch đặt đã được hủy thành công.');
+        },
+        error: (error) => {
+          console.error('Error cancelling booking:', error);
+          this.errorMessage = error.message || 'Không thể hủy lịch đặt. Vui lòng thử lại.';
+          this.isLoading = false;
+        }
+      });
+    }
+  }
+
+  // Hàm kiểm tra điều kiện hiển thị nút Hủy (Đã cập nhật kiểm tra trạng thái thanh toán)
+  shouldShowCancelButton(booking: BookingDto): boolean {
+    // Nút Hủy hiển thị khi trạng thái booking KHÔNG phải là 'Completed' và 'Cancelled'
+    // VÀ trạng thái thanh toán KHÔNG phải là 'Completed'
+    const bookingStatusAllowCancel = booking.statusName !== 'Completed' && booking.statusName !== 'Cancelled';
+    const paymentStatusAllowCancel = booking.paymentStatusName !== 'Completed';
+
+    return bookingStatusAllowCancel && paymentStatusAllowCancel;
+  }
 
 
   // Các hàm khác giữ nguyên

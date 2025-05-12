@@ -1,0 +1,108 @@
+<h2>{{ productId !== 0 ? 'Chi tiết Sản phẩm #' + productId : 'Thêm Sản phẩm Mới' }}</h2>
+
+<div *ngIf="isLoading" class="loading-indicator">
+  Đang tải dữ liệu...
+</div>
+
+<div *ngIf="errorMessage && !isLoading" class="alert alert-danger">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="product && !isLoading && !errorMessage" class="product-details-container">
+
+  <div class="card mb-3">
+    <div class="card-header">
+      Thông tin Sản phẩm
+      <button *ngIf="!isEditing && productId !== 0" class="btn btn-sm btn-secondary float-right" (click)="toggleEditMode()">
+        Chỉnh sửa
+      </button>
+      <button *ngIf="isEditing && productId !== 0" class="btn btn-sm btn-secondary float-right" (click)="toggleEditMode()">
+        Hủy
+      </button>
+    </div>
+    <div class="card-body">
+
+      <div *ngIf="!isEditing">
+        <p><strong>ID Sản phẩm:</strong> {{ product.productId }}</p>
+        <p><strong>Tên sản phẩm:</strong> {{ product.name }}</p>
+        <p><strong>Mô tả:</strong> {{ product.description || 'N/A' }}</p>
+        <p><strong>Giá:</strong> {{ product.price | currency:'VND':'symbol':'1.0-0' }}</p>
+        <p><strong>Tồn kho:</strong> {{ product.stockQuantity }}</p>
+        <p><strong>SKU:</strong> {{ product.sku || 'N/A' }}</p>
+        <p><strong>Trạng thái:</strong> {{ product.isActive ? 'Active' : 'Inactive' }}</p>
+        <p><strong>Ngày tạo:</strong> {{ product.createdAt | date: 'medium' }}</p>
+        <p><strong>Ngày cập nhật:</strong> {{ product.updatedAt | date: 'medium' }}</p>
+        <p><strong>Danh mục:</strong> {{ product.categoryId || 'N/A' }}</p> <p><strong>Hình ảnh:</strong>
+            <a *ngIf="product.imageUrl" [href]="product.imageUrl" target="_blank">{{ product.imageUrl }}</a>
+            <span *ngIf="!product.imageUrl">N/A</span>
+        </p>
+         <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="Product Image" class="product-image-preview">
+      </div>
+
+      <div *ngIf="isEditing">
+        <form (ngSubmit)="saveProduct()">
+           <div class="form-group">
+            <label for="productId">ID Sản phẩm:</label>
+            <input type="text" id="productId" class="form-control" [(ngModel)]="product.productId" name="productId" disabled *ngIf="productId !== 0">
+            <input type="text" id="productIdNew" class="form-control" value="Sản phẩm mới" disabled *ngIf="productId === 0">
+          </div>
+
+          <div class="form-group">
+            <label for="name">Tên sản phẩm:</label>
+            <input type="text" id="name" class="form-control" [(ngModel)]="product.name" name="name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Mô tả:</label>
+            <textarea id="description" class="form-control" [(ngModel)]="product.description" name="description"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="price">Giá:</label>
+            <input type="number" id="price" class="form-control" [(ngModel)]="product.price" name="price" required min="0">
+          </div>
+
+          <div class="form-group">
+            <label for="stockQuantity">Tồn kho:</label>
+            <input type="number" id="stockQuantity" class="form-control" [(ngModel)]="product.stockQuantity" name="stockQuantity" required min="0">
+          </div>
+
+           <div class="form-group">
+            <label for="sku">SKU:</label>
+            <input type="text" id="sku" class="form-control" [(ngModel)]="product.sku" name="sku">
+          </div>
+
+          <div class="form-group">
+            <label for="imageFile">Chọn Hình ảnh:</label>
+            <input type="file" id="imageFile" class="form-control-file" (change)="onFileSelected($event)" accept="image/*">
+            <img *ngIf="imagePreviewUrl" [src]="imagePreviewUrl" alt="Product Image Preview" class="product-image-preview mt-2">
+             <span *ngIf="!imagePreviewUrl">Chưa có hình ảnh được chọn.</span>
+          </div>
+          <div class="form-group">
+            <label for="categoryId">Danh mục:</label>
+            <select id="categoryId" class="form-control" [(ngModel)]="product.categoryId" name="categoryId" required>
+              <option [ngValue]="0" disabled selected>-- Chọn danh mục --</option> <option *ngFor="let category of categories" [value]="category.categoryId">
+                 {{ category.name }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="isActive">Trạng thái:</label>
+            <select id="isActive" class="form-control" [(ngModel)]="product.isActive" name="isActive">
+              <option [ngValue]="true">Active</option>
+              <option [ngValue]="false">Inactive</option>
+            </select>
+          </div>
+
+
+          <button type="submit" class="btn btn-primary mr-2">Lưu</button>
+          <button type="button" class="btn btn-secondary" (click)="productId !== 0 ? toggleEditMode() : goBack()">Hủy</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <button (click)="goBack()" class="btn btn-secondary">Quay lại Danh sách Sản phẩm</button>
+
+</div>

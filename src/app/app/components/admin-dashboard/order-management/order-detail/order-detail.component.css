@@ -1,0 +1,89 @@
+/* Optional: Add some basic styling for the detail view */
+.order-details-container {
+    margin-top: 20px;
+}
+
+.card {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+    border-bottom: 1px solid #e0e0e0;
+    font-weight: bold;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-body p {
+    margin-bottom: 8px;
+}
+
+.data-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.data-table th,
+.data-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #f2f2f2;
+}
+
+.loading-indicator {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Styles for the status dropdown */
+.form-control-sm {
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
+
+.d-inline-block {
+    display: inline-block !important;
+}
+
+.w-auto {
+    width: auto !important;
+}
+
+.ml-2 {
+    margin-left: .5rem !important;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+/* Adjust alignment if needed */
+.form-group.d-flex.align-items-center label {
+    margin-right: .5rem;
+    /* Khoảng cách giữa label và dropdown */
+    margin-bottom: 0;
+    /* Loại bỏ margin-bottom mặc định */
+}

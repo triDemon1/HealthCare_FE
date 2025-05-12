@@ -1,0 +1,81 @@
+<h2>Quản lý Sản phẩm</h2>
+
+<div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+</div>
+
+<div *ngIf="pagedProducts$ | async as pagedProducts">
+    <div *ngIf="pagedProducts.items.length === 0" class="no-data-message">
+        Chưa có sản phẩm nào trong hệ thống.
+    </div>
+    <button class="btn btn-primary mb-3" (click)="createProduct()">Thêm sản phẩm mới</button>
+    <div class="megamenu-container">
+        <h6>Sản phẩm</h6>
+        <ul class="megamenu-list">
+            <li><a href="#" (click)="showAllProducts($event)">Tất cả sản phẩm</a></li>
+            <li><a href="#" (click)="filterByCategory($event, 1)">Sản phẩm cho Người già</a></li>
+            <li><a href="#" (click)="filterByCategory($event, 2)">Sản phẩm cho Trẻ em</a></li>
+            <li><a href="#" (click)="filterByCategory($event, 3)">Sản phẩm cho Thú cưng</a></li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h2>{{ displayedCategoryName }}</h2>
+    <div *ngIf="pagedProducts.items.length > 0" class="data-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Tồn kho</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of pagedProducts.items">
+                    <td>{{ product.productId }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price | currency:'VND':'symbol':'1.0-0' }}</td>
+                    <td>{{ product.stockQuantity }}</td>
+                    <td>{{ product.isActive ? 'Active' : 'Inactive' }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-info mr-2"
+                        [routerLink]="['/admin/products', product.productId]">Xem/Sửa</button>
+                        <button class="btn btn-sm btn-danger" (click)="deleteProduct(product.productId)">Xóa</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div *ngIf="pagedProducts.totalCount > 0" class="pagination-controls">
+            <button class="btn btn-secondary"
+                (click)="goToPage(getPreviousPageIndex(pagedProducts.pageIndex))"
+                [disabled]="isFirstPage(pagedProducts)">
+                Trước
+            </button>
+
+            <span *ngFor="let page of getPageNumbers(pagedProducts)">
+                <button class="btn" [class.btn-primary]="page === pagedProducts.pageIndex"
+                    [class.btn-outline-primary]="page !== pagedProducts.pageIndex" (click)="goToPage(page)">
+                    {{ page + 1 }} </button>
+            </span>
+
+            <button class="btn btn-secondary"
+                (click)="goToPage(getNextPageIndex(pagedProducts.pageIndex))"
+                [disabled]="isLastPage(pagedProducts)">
+                Sau
+            </button>
+
+            <span class="ms-3">
+                Tổng số: {{ pagedProducts.totalCount }} sản phẩm
+            </span>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!pagedProducts$ || !(pagedProducts$ | async)" class="loading-indicator">
+    Đang tải danh sách sản phẩm...
+</div>

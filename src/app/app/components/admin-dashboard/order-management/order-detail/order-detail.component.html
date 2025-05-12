@@ -1,0 +1,92 @@
+<h2>Chi tiết Đơn hàng #{{ orderId }}</h2>
+
+<div *ngIf="isLoading" class="loading-indicator">
+    Đang tải chi tiết đơn hàng...
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+</div>
+
+<div *ngIf="order && !isLoading && !errorMessage" class="order-details-container">
+    <div class="card mb-3">
+        <div class="card-header">
+            Thông tin chung
+        </div>
+        <div class="card-body">
+            <p><strong>ID Đơn hàng:</strong> {{ order.orderId }}</p>
+            <p><strong>Ngày đặt:</strong> {{ order.orderDate | date: 'medium' }}</p>
+            <p><strong>Tổng tiền:</strong> {{ order.totalAmount | currency:'VND':'symbol':'1.0-0' }}</p>
+
+            <div class="form-group" *ngIf="orderStatuses && orderStatuses.length > 0">
+                <label for="orderStatus"><strong>Trạng thái:</strong></label>
+                <select id="orderStatus" class="form-control form-control-sm d-inline-block w-auto ml-2"
+                        [(ngModel)]="selectedStatusId"
+                        (change)="updateOrderStatus()"
+                        [disabled]="order.orderStatusName === 'Cancelled'"> <option *ngFor="let status of orderStatuses" [value]="status.orderStatusId">
+                    {{ status.statusName }}
+                  </option>
+                </select>
+                 </div>
+              <p *ngIf="!orderStatuses || orderStatuses.length === 0 || order.orderStatusName === 'Cancelled'">
+                <strong>Trạng thái:</strong> {{ order.orderStatusName || 'N/A' }}
+              </p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            Thông tin Khách hàng
+        </div>
+        <div class="card-body">
+            <p><strong>ID Khách hàng:</strong> {{ order.customerId }}</p>
+            <p><strong>Tên Khách hàng:</strong> {{ order.customerName || 'N/A' }}</p>
+            <p><strong>Sđt Khách hàng:</strong> {{ order.phoneNumber || 'N/A' }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            Địa chỉ Giao hàng
+        </div>
+        <div class="card-body">
+            <p><strong>ID Địa chỉ:</strong> {{ order.addressId }}</p>
+            <p><strong>Địa chỉ:</strong> {{ order.addressStreet || '' }}, {{ order.addressWard || '' }}, {{
+                order.addressDistrict || '' }}, {{ order.addressCity || '' }}, {{ order.addressCountry || '' }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            Chi tiết Sản phẩm
+        </div>
+        <div class="card-body">
+            <div *ngIf="!order.orderDetails || order.orderDetails.length === 0">
+                Không có sản phẩm nào trong đơn hàng này.
+            </div>
+            <div *ngIf="order.orderDetails && order.orderDetails.length > 0" class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Giá tại thời điểm mua</th>
+                            <th>Tổng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of order.orderDetails">
+                            <td>{{ item.productName || 'N/A' }} (ID: {{ item.productId }})</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.priceAtPurchase | currency:'VND':'symbol':'1.0-0' }}</td>
+                            <td>{{ (item.quantity * item.priceAtPurchase) | currency:'VND':'symbol':'1.0-0' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <button (click)="goBack()" class="btn btn-secondary">Quay lại Danh sách Đơn hàng</button>
+
+</div>
