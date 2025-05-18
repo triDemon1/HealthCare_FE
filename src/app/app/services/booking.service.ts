@@ -17,6 +17,7 @@ import { Pagination } from '../models/pagination.interface';
 export class BookingService {
   private apiUrl = 'https://localhost:7064/api/Booking'; // URL gốc của API backend
   private apiUrlPayment = 'https://localhost:7064/api';
+  private apiServicesUrl = 'https://localhost:7064/api/ServiceManagement';
 
   constructor(private http: HttpClient) { }
 
@@ -28,6 +29,19 @@ export class BookingService {
   // Lấy TẤT CẢ services, việc lọc sẽ thực hiện ở frontend
   getAllServices(): Observable<Service[]> {
     return this.http.get<Service[]>(`${this.apiUrl}/services`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getAllServiceManagement(pageIndex: number, pageSize: number, searchTerm: string | null = null): Observable<Pagination<Service>> {
+    let params = new HttpParams()
+      .set('pageIndex', pageIndex.toString())
+      .set('pageSize', pageSize.toString());
+
+    if (searchTerm) {
+      params = params.append('searchTerm', searchTerm);
+    }
+
+    return this.http.get<Pagination<Service>>(`${this.apiServicesUrl}`, { params })
       .pipe(catchError(this.handleError));
   }
   getAllPaymentStatus(): Observable<PaymentStatus[]> {
@@ -52,6 +66,7 @@ export class BookingService {
     return this.http.get<ExistingSubject[]>(`${this.apiUrl}/customers/${customerId}/subjects`, { params })
       .pipe(catchError(this.handleError));
   }
+
 
 
   createBooking(payload: BookingPayload): Observable<any> {
@@ -115,4 +130,5 @@ export class BookingService {
     // Trả về một thông báo lỗi thân thiện với người dùng hoặc throwError
     return throwError(() => new Error('Đã xảy ra lỗi khi gọi API. Vui lòng thử lại.'));
   }
+  
 }

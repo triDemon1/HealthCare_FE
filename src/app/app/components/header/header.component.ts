@@ -1,5 +1,5 @@
 import { Component,  EventEmitter, Output, OnInit, OnDestroy } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 import { CommonModule } from '@angular/common'; // ✅ Thêm CommonModule
@@ -13,15 +13,16 @@ import { CartService } from '../../services/cart.service';
 
 export class HeaderComponent implements OnInit, OnDestroy {
   cartItemCount$: Observable<number>;
-  constructor(public authService: AuthService, private cartService: CartService) {
+  constructor(public authService: AuthService, private cartService: CartService, private router: Router) {
     this.cartItemCount$ = this.cartService.getTotalItems();
   }
-
+  userName: string = '';
   ngOnInit(): void {
     // Không cần subscribe thủ công nếu dùng async pipe trong template
     // this.cartSubscription = this.cartService.getTotalItems().subscribe(count => {
     //   this.cartItemCount = count;
     // });
+    this.userName = this.authService.getUserName() ?? '';
   }
 
   ngOnDestroy(): void {

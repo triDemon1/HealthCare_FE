@@ -1,5 +1,5 @@
 h2 {
-  color: #e67e22;
+  color: #e67e22; /* Màu cam năng động */
 }
 
 p {
@@ -10,12 +10,11 @@ p {
 ul {
   padding-left: 20px;
   list-style-type: circle;
-  color: #444;
+  color: #f1c40f; /* Màu vàng tươi sáng */
 }
 
 body {
   font-family: sans-serif;
-  /* Hoặc font chữ bạn muốn sử dụng */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -24,39 +23,26 @@ body {
 
 .card-section {
   display: flex;
-  /* Sử dụng flexbox để xếp các thẻ ngang hàng */
   justify-content: center;
-  /* Căn giữa các thẻ */
   gap: 20px;
-  /* Khoảng cách giữa các thẻ */
   padding: 40px 20px;
-  /* Padding trên dưới và hai bên */
-  background-color: #f8f8f8;
-  /* Màu nền nhẹ cho phần này */
+  background-color: #fcf3cf; /* Màu nền vàng nhạt */
   flex-wrap: wrap;
-  /* Cho phép các thẻ xuống dòng trên màn hình nhỏ */
 }
 
 .card {
   background-color: #fff;
-  /* Nền trắng cho thẻ */
   border-radius: 8px;
-  /* Bo góc */
   padding: 30px;
   width: 300px;
-  /* Chiều rộng cố định của thẻ, có thể điều chỉnh */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  /* Đổ bóng nhẹ */
   display: flex;
   flex-direction: column;
-  /* Xếp các nội dung trong thẻ theo cột */
   align-items: flex-start;
-  /* Căn nội dung sang trái */
 }
 
 .card h2 {
-  color: #4a148c;
-  /* Màu tím đậm tương tự trong hình */
+  color: #3498db; /* Màu xanh dương */
   margin-top: 0;
   margin-bottom: 10px;
   font-size: 1.3em;
@@ -66,29 +52,23 @@ body {
   margin-bottom: 20px;
   line-height: 1.5;
   flex-grow: 1;
-  /* Cho phép đoạn văn bản chiếm không gian còn lại */
 }
 
 .card a {
-  color: #4a148c;
-  /* Màu tím cho link */
+  color: #3498db; /* Màu xanh dương cho link */
   text-decoration: none;
-  /* Bỏ gạch chân link */
   font-weight: bold;
   display: inline-block;
   margin-top: auto;
-  /* Đẩy link xuống cuối thẻ */
 }
 
 .card a:hover {
   text-decoration: underline;
-  /* Gạch chân khi hover */
 }
 
 .redefining-section {
   padding: 40px 20px;
   text-align: center;
-  /* Căn giữa tiêu đề */
 }
 
 .redefining-section h2 {
@@ -99,26 +79,17 @@ body {
 
 .content-container {
   display: flex;
-  /* Sử dụng flexbox cho bố cục 2 cột */
   max-width: 1200px;
-  /* Giới hạn chiều rộng tối đa */
   margin: 0 auto;
-  /* Căn giữa container */
   gap: 40px;
-  /* Khoảng cách giữa hai cột */
   flex-wrap: wrap;
-  /* Cho phép xuống dòng trên màn hình nhỏ */
   align-items: center;
-  /* Căn giữa theo chiều dọc */
 }
 
 .text-content {
   flex: 1;
-  /* Chiếm phần không gian còn lại */
   min-width: 300px;
-  /* Chiều rộng tối thiểu */
   text-align: left;
-  /* Căn lề trái cho nội dung văn bản */
 }
 
 .text-content>p {
@@ -128,31 +99,22 @@ body {
 
 .feature {
   display: flex;
-  /* Sử dụng flexbox để căn chỉnh icon và text */
   margin-bottom: 20px;
   align-items: flex-start;
-  /* Căn chỉnh các item theo đỉnh */
 }
 
 .feature .icon {
   width: 40px;
-  /* Kích thước placeholder cho icon */
   height: 40px;
-  background-color: #ddd;
-  /* Màu nền tạm cho icon */
+  background-color: #f1c40f; /* Màu nền icon */
   border-radius: 50%;
-  /* Làm tròn nếu icon là hình tròn */
   margin-right: 15px;
   flex-shrink: 0;
-  /* Ngăn icon bị co lại */
-  /* Thay thế bằng style cho icon thực tế */
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.5em;
-  /* Kích thước icon */
-  color: #4a148c;
-  /* Màu icon */
+  color: #fff; /* Màu icon trắng */
 }
 
 .feature-text h3 {
@@ -169,53 +131,39 @@ body {
 
 .image-content {
   flex: 1;
-  /* Chiếm phần không gian còn lại */
   min-width: 300px;
-  /* Chiều rộng tối thiểu */
   display: flex;
   justify-content: center;
-  /* Căn giữa hình ảnh trong cột */
 }
 
 .image-content img {
   max-width: 100%;
-  /* Đảm bảo hình ảnh không tràn ra ngoài container */
   height: auto;
-  /* Giữ tỷ lệ khung hình */
   border-radius: 8px;
-  /* Bo góc hình ảnh */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  /* Đổ bóng nhẹ cho hình ảnh */
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .card-section {
     flex-direction: column;
-    /* Xếp các thẻ theo cột trên màn hình nhỏ */
     align-items: center;
-    /* Căn giữa các thẻ */
   }
 
   .card {
     width: 80%;
-    /* Chiều rộng thẻ trên màn hình nhỏ */
     max-width: 350px;
-    /* Chiều rộng tối đa */
   }
 
   .content-container {
     flex-direction: column;
-    /* Xếp các cột thành hàng trên màn hình nhỏ */
     gap: 30px;
   }
 
   .text-content,
   .image-content {
     min-width: unset;
-    /* Bỏ min-width trên màn hình nhỏ */
     width: 100%;
-    /* Chiếm toàn bộ chiều rộng */
   }
 
   .redefining-section h2 {

@@ -1,19 +1,17 @@
-<h2>Quản lý Tài khoản Người dùng</h2>
-
-<div *ngIf="errorMessage" class="alert alert-danger">
+<h2>Quản lý Dịch Vụ</h2> <div *ngIf="errorMessage" class="alert alert-danger">
   {{ errorMessage }}
 </div>
 
 <div *ngIf="isLoading" class="loading-indicator">
-  Đang tải danh sách người dùng...
-</div>
+  Đang tải danh sách dịch vụ... </div>
 
 <div *ngIf="!isLoading && !errorMessage">
-  <button class="btn btn-primary mb-3" (click) = "router.navigate(['/admin/services/create'])">Thêm Dịch Vụ Mới</button> <div *ngIf="services.length === 0" class="no-data-message">
-    Chưa có người dùng nào trong hệ thống.
-  </div>
+  <button class="btn btn-primary mb-3" (click)="router.navigate(['/admin/services/create'])">Thêm Dịch Vụ Mới</button>
 
-  <div *ngIf="services.length > 0" class="data-table">
+  <div *ngIf="pagedServices.items.length === 0 && !isLoading" class="no-data-message">
+    Chưa có dịch vụ nào trong hệ thống. </div>
+
+  <div *ngIf="pagedServices.items.length > 0" class="data-table">
     <table>
       <thead>
         <tr>
@@ -24,23 +22,39 @@
           <th>Thời lượng</th>
           <th>Giá</th>
           <th>IsActive</th>
-        </tr>
+          <th>Hành động</th> </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let service of services">
+        <tr *ngFor="let service of pagedServices.items">
           <td>{{ service.serviceid }}</td>
           <td>{{ service.name }}</td>
           <td>{{ service.servicegroupid }}</td>
           <td>{{ service.description || 'N/A' }}</td>
           <td>{{ service.duration }}</td>
-          <td>{{ service.price ? 'Có' : 'Không' }}</td>
-          <td>{{ service.isactive}}</td>
+          <td>{{ service.price }}</td> <td>{{ service.isactive }}</td>
           <td>
             <button class="btn btn-sm btn-warning" (click)="router.navigate(['/admin/services/edit', service.serviceid])">Sửa</button>
-            <button class="btn btn-sm btn-danger" >Xóa</button>
-          </td>
+            <button class="btn btn-sm btn-danger">Xóa</button>
+            </td>
         </tr>
       </tbody>
     </table>
+
+    <div *ngIf="pagedServices.totalPages > 1" class="pagination-controls mt-3">
+      <button class="btn btn-secondary" [disabled]="!pagedServices.hasPreviousPage" (click)="previousPage()">Trước</button>
+
+      <span>Trang {{ pagedServices.pageIndex + 1 }} / {{ pagedServices.totalPages }} (Tổng {{ pagedServices.totalCount }} mục)</span>
+
+      <button class="btn btn-secondary" [disabled]="!pagedServices.hasNextPage" (click)="nextPage()">Sau</button>
+
+      <div class="page-numbers mt-2">
+        <button *ngFor="let pageNum of [].constructor(pagedServices.totalPages); let i = index"
+                class="btn btn-outline-primary me-1"
+                [class.active]="i === pagedServices.pageIndex"
+                (click)="goToPage(i)">
+          {{ i + 1 }}
+        </button>
+      </div>
+    </div>
   </div>
 </div>

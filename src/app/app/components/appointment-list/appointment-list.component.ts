@@ -10,12 +10,13 @@ import { debounceTime } from 'rxjs';
 // Import các thành phần từ RxJS
 import { Observable, BehaviorSubject, Subscription, catchError, of, switchMap, tap, startWith } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-appointment-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './appointment-list.component.html',
   styleUrl: './appointment-list.component.css'
 })
@@ -165,7 +166,9 @@ export class AppointmentListComponent implements OnInit, OnDestroy {
     }
     return Array.from({ length: pagedResult.totalPages }, (_, i) => i);
   }
-
+  onSearchTermChange(): void {
+    this.searchTerms.next(this.searchTerm);
+  }
   cancelBooking(bookingId: number): void {
     if (confirm('Bạn có chắc chắn muốn hủy lịch đặt này không?')) {
       this.isLoading = true;

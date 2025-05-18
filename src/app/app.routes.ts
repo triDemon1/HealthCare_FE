@@ -14,6 +14,10 @@ import { CartComponent } from './app/components/cart/cart.component';
 import { ProductComponent } from './app/components/product/product.component';
 import { PaymentReturnComponent } from './app/components/payment-return/payment-return.component';
 import { PaymentComponent } from './app/components/payment/payment.component';
+import { UserProfileComponent } from './app/components/user-profile/user-profile.component';
+import { ServiceManagement } from './app/services/serviceManagement.service';
+import { ServiceManagementComponent } from './app/components/admin-dashboard/service-management/service-management.component';
+import { ServiceFormComponent } from './app/components/admin-dashboard/service-management/service-edit/service-edit.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', component: HomeComponent },
@@ -28,6 +32,7 @@ export const routes: Routes = [
   { path: 'pet-care', component: PetCareComponent },
   { path: 'cart', component: CartComponent },
   { path: 'products', component: ProductComponent },
+  {path:'profile', component: UserProfileComponent},
   { path: 'products/:categoryId', component: ProductComponent },
   { path: 'payment/success', component: PaymentReturnComponent }, // Route cho trang thành công
   { path: 'payment/failed', component: PaymentReturnComponent }, // Route cho trang thất bại (có thể dùng chung)
@@ -89,13 +94,13 @@ export const routes: Routes = [
       import('./app/components/admin-dashboard/user-management/user-management.route').then(m => m.userManagementRoutes)
   },
   {
-    path: 'admin/users/:roleId', // Route for admin/users/:roleId
-    loadChildren: () => import('./app/components/admin-dashboard/user-management/user-management.route').then(m => m.userManagementRoutes)
-  },
-  {
     path: 'admin/users/create',
     loadChildren: () =>
       import('./app/components/admin-dashboard/user-management/user-management.route').then(m => m.userEditRoutes)
+  },
+  {
+    path: 'admin/users/:roleId', // Route for admin/users/:roleId
+    loadChildren: () => import('./app/components/admin-dashboard/user-management/user-management.route').then(m => m.userManagementRoutes)
   },
   {
     path: 'admin/users/edit/:id',
@@ -112,11 +117,11 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./app/components/admin-dashboard/booking-management/booking-management.route').then(m => m.bookingEditRoutes)
   },
-  {
-    path: 'admin/services',
-    loadChildren: () =>
-      import('./app/components/admin-dashboard/service-management/service-management.route').then(m => m.serviceManagementRoutes)
-  },
+  // {
+  //   path: 'admin/services',
+  //   loadChildren: () =>
+  //     import('./app/components/admin-dashboard/service-management/service-management.route').then(m => m.serviceManagementRoutes)
+  // },
   {
     path: 'admin/orders',
     loadChildren: () =>
@@ -147,6 +152,9 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./app/components/admin-dashboard/product-management/product-management.route').then(m => m.productEditRoutes)
   },
+  { path: 'admin/services', component: ServiceManagementComponent },
+  { path: 'admin/services/create', component: ServiceFormComponent },
+  { path: 'admin/services/edit/:id', component: ServiceFormComponent },
 ];
 
 export default routes;

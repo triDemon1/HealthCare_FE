@@ -1,92 +1,121 @@
-<h2>Đặt Lịch Dịch Vụ</h2>
+<h2 class="text-center text-primary mb-4">Đặt Lịch Dịch Vụ</h2>
 
-<form (ngSubmit)="onSubmit()" #bookingForm="ngForm" class="booking-form">
+<form (ngSubmit)="onSubmit()" #bookingForm="ngForm" class="container p-4 bg-white shadow rounded">
 
-  <fieldset>
-    <legend>Thông Tin Đối Tượng</legend>
+  <!-- Thông Tin Đối Tượng -->
+  <fieldset class="border p-3 mb-4 rounded">
+    <legend class="w-auto px-2">Thông Tin Đối Tượng</legend>
 
-    <div class="form-group">
+    <div class="form-group mb-3">
       <label for="subjectType">Loại đối tượng:</label>
-      <select id="subjectType" name="subjectType" [(ngModel)]="selectedSubjectTypeId" (ngModelChange)="onSubjectTypeChange($event)" required>
+      <select class="form-control" id="subjectType" name="subjectType"
+              [(ngModel)]="selectedSubjectTypeId" (ngModelChange)="onSubjectTypeChange($event)" required>
         <option value="" disabled>-- Chọn loại đối tượng --</option>
         <option *ngFor="let type of subjectTypes" [value]="type.typeid">{{ type.subjectname }}</option>
       </select>
     </div>
 
-    <div class="form-group" *ngIf="selectedSubjectTypeId">
-       <label for="existingSubject">Chọn đối tượng đã lưu:</label>
-       <select id="existingSubject" name="existingSubject" [(ngModel)]="bookingData.subjectId" (ngModelChange)="onExistingSubjectSelect($event)">
-          <option value="">-- Hoặc tạo đối tượng mới bên dưới --</option>
-          <option *ngFor="let subject of existingSubjects" [value]="subject.subjectid">{{ subject.name }}</option>
-       </select>
+    <div class="form-group mb-3" *ngIf="selectedSubjectTypeId">
+      <label for="existingSubject">Chọn đối tượng đã lưu:</label>
+      <select class="form-control" id="existingSubject" name="existingSubject"
+              [(ngModel)]="bookingData.subjectId" (ngModelChange)="onExistingSubjectSelect($event)">
+        <option value="">-- Hoặc tạo đối tượng mới bên dưới --</option>
+        <option *ngFor="let subject of existingSubjects" [value]="subject.subjectid">{{ subject.name }}</option>
+      </select>
     </div>
 
     <ng-container *ngIf="!bookingData.subjectId && selectedSubjectTypeId">
-        <div class="form-group">
-          <label for="subjectName">Tên đối tượng:</label>
-          <input type="text" id="subjectName" name="subjectname" [(ngModel)]="subjectData.name" required>
-        </div>
+      <div class="form-group mb-3">
+        <label for="subjectName">Tên đối tượng:</label>
+        <input type="text" class="form-control" id="subjectName" name="subjectname"
+               [(ngModel)]="subjectData.name" required>
+      </div>
 
-        <div class="form-group">
-          <label for="subjectdob">Ngày sinh:</label>
-          <input type="date" id="subjectDob" name="subjectdob" [(ngModel)]="subjectData.dateOfBirth">
-        </div>
+      <div class="form-group mb-3">
+        <label for="subjectDob">Ngày sinh:</label>
+        <input type="date" class="form-control" id="subjectDob" name="subjectdob"
+               [(ngModel)]="subjectData.dateOfBirth">
+      </div>
 
-         <div class="form-group">
-            <label>Giới tính:</label>
-            <input type="radio" id="male" name="subjectgender" [value]="1" [(ngModel)]="subjectData.gender"> <label for="male">Đực/Nam</label>
-            <input type="radio" id="female" name="subjectgender" [value]="0" [(ngModel)]="subjectData.gender"> <label for="female">Cái/Nữ</label>
-         </div>
-
-        <div class="form-group">
-          <label for="medicalNotes">Ghi chú y tế (nếu có):</label>
-          <textarea id="medicalNotes" name="medicalnotes" [(ngModel)]="subjectData.medicalNotes"></textarea>
+      <div class="form-group mb-3">
+        <label>Giới tính:</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="male" name="subjectgender"
+                 [value]="1" [(ngModel)]="subjectData.gender">
+          <label class="form-check-label" for="male">Đực/Nam</label>
         </div>
-        </ng-container>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="female" name="subjectgender"
+                 [value]="0" [(ngModel)]="subjectData.gender">
+          <label class="form-check-label" for="female">Cái/Nữ</label>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="medicalNotes">Ghi chú y tế (nếu có):</label>
+        <textarea class="form-control" id="medicalNotes" name="medicalnotes"
+                  rows="3" [(ngModel)]="subjectData.medicalNotes"></textarea>
+      </div>
+    </ng-container>
   </fieldset>
 
-  <fieldset>
-      <legend>Thông Tin Đặt Lịch</legend>
+  <!-- Thông Tin Đặt Lịch -->
+  <fieldset class="border p-3 mb-4 rounded">
+    <legend class="w-auto px-2">Thông Tin Đặt Lịch</legend>
 
-      <div class="form-group">
-          <label for="service">Chọn dịch vụ:</label>
-          <select id="service" name="service" [(ngModel)]="bookingData.serviceId" required [disabled]="!selectedSubjectTypeId">
-              <option value="" disabled>-- Chọn dịch vụ --</option>
-              <option *ngFor="let service of filteredServices" [value]="service.serviceid">
-                  {{ service.name }} ({{ service.duration }} phút - {{ service.price | currency:'VND' }})
-              </option>
-          </select>
-          <div *ngIf="loadingServices">Đang tải dịch vụ...</div>
-      </div>
+    <div class="form-group mb-3">
+      <label for="service">Chọn dịch vụ:</label>
+      <select class="form-control" id="service" name="service"
+              [(ngModel)]="bookingData.serviceId" required [disabled]="!selectedSubjectTypeId">
+        <option value="" disabled>-- Chọn dịch vụ --</option>
+        <option *ngFor="let service of filteredServices" [value]="service.serviceid">
+          {{ service.name }} ({{ service.duration }} phút - {{ service.price | currency:'VND' }})
+        </option>
+      </select>
+      <div *ngIf="loadingServices" class="text-muted mt-1">Đang tải dịch vụ...</div>
+    </div>
 
-      <div class="form-group">
-          <label for="address">Địa chỉ thực hiện:</label>
-           <select id="address" name="address" [(ngModel)]="bookingData.addressId" required>
-              <option value="" disabled>-- Chọn địa chỉ --</option>
-              <option *ngFor="let address of customerAddresses" [value]="address.addressid">
-                {{ address.street }}, {{ address.ward }}, {{ address.district }}, {{ address.city }}
-              </option>
-              </select>
-      </div>
+    <div class="form-group mb-3">
+      <label for="address">Địa chỉ thực hiện:</label>
+      <select class="form-control" id="address" name="address"
+              [(ngModel)]="bookingData.addressId" required>
+        <option value="" disabled>-- Chọn địa chỉ --</option>
+        <option *ngFor="let address of customerAddresses" [value]="address.addressid">
+          {{ address.street }}, {{ address.ward }}, {{ address.district }}, {{ address.city }}
+        </option>
+      </select>
+    </div>
 
-      <div class="form-group">
-          <label for="startTime">Thời gian bắt đầu dự kiến:</label>
-          <input type="datetime-local" id="startTime" name="startTime" [(ngModel)]="bookingData.scheduledStartTime" required>
-      </div>
+    <div class="form-group mb-3">
+      <label for="startTime">Thời gian bắt đầu dự kiến:</label>
+      <input type="datetime-local" class="form-control" id="startTime" name="startTime"
+             [(ngModel)]="bookingData.scheduledStartTime" required>
+    </div>
 
-      <div class="form-group">
-          <label for="notes">Ghi chú thêm:</label>
-          <textarea id="notes" name="notes" [(ngModel)]="bookingData.notes"></textarea>
-      </div>
+    <div class="form-group mb-3">
+      <label for="notes">Ghi chú thêm:</label>
+      <textarea class="form-control" id="notes" name="notes"
+                rows="3" [(ngModel)]="bookingData.notes"></textarea>
+    </div>
 
-       <input type="hidden" name="customerId" [(ngModel)]="bookingData.customerId">
-
+    <input type="hidden" name="customerId" [(ngModel)]="bookingData.customerId">
   </fieldset>
 
-  <button type="submit" [disabled]="!bookingForm.form.valid || processing">
-    {{ processing ? 'Đang xử lý...' : 'Đặt Lịch' }}
-  </button>
-  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+  <!-- Nút Submit -->
+  <div class="text-center">
+    <button type="submit"
+            class="btn btn-primary px-4"
+            [disabled]="!bookingForm.form.valid || processing">
+      {{ processing ? 'Đang xử lý...' : 'Đặt Lịch' }}
+    </button>
+  </div>
+
+  <!-- Thông báo -->
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3 text-center">
+    {{ errorMessage }}
+  </div>
+  <div *ngIf="successMessage" class="alert alert-success mt-3 text-center">
+    {{ successMessage }}
+  </div>
 
 </form>

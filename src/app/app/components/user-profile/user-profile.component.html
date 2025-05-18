@@ -1,0 +1,86 @@
+<div class="container mt-5">
+  <div class="card shadow-lg">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Cập nhật hồ sơ cá nhân</h4>
+    </div>
+    <div class="card-body">
+
+      <div *ngIf="isLoading" class="alert alert-info">
+        Đang tải hoặc cập nhật profile...
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <div *ngIf="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+
+      <form *ngIf="profileForm && !isLoading" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+        <div class="mb-3">
+          <label class="form-label fw-bold">Tên tài khoản:</label>
+          <p class="form-control-plaintext">{{ originalProfile?.username }}</p>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="firstName" class="form-label">Tên:</label>
+            <input id="firstName" type="text" formControlName="firstName" class="form-control"
+              [ngClass]="{ 'is-invalid': formControls['firstName'].invalid && formControls['firstName'].touched }">
+            <div *ngIf="formControls['firstName'].invalid && formControls['firstName'].touched"
+              class="invalid-feedback">
+              <div *ngIf="formControls['firstName'].errors?.['required']">Tên không được để trống.</div>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="lastName" class="form-label">Họ:</label>
+            <input id="lastName" type="text" formControlName="lastName" class="form-control">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input id="email" type="email" formControlName="email" class="form-control"
+            [ngClass]="{ 'is-invalid': formControls['email'].invalid && formControls['email'].touched }">
+          <div *ngIf="formControls['email'].invalid && formControls['email'].touched" class="invalid-feedback">
+            <div *ngIf="formControls['email'].errors?.['email']">Email không hợp lệ.</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="phoneNumber" class="form-label">Số điện thoại:</label>
+            <input id="phoneNumber" type="tel" formControlName="phoneNumber" class="form-control">
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="dateOfBirth" class="form-label">Ngày sinh:</label>
+            <input id="dateOfBirth" type="date" formControlName="dateOfBirth" class="form-control">
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="gender" class="form-label">Giới tính:</label>
+          <select id="gender" formControlName="gender" class="form-select">
+            <option [ngValue]="null">Chọn giới tính</option>
+            <option [ngValue]="true">Nam</option>
+            <option [ngValue]="false">Nữ</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100 fw-bold shadow-sm"
+          style="background: linear-gradient(135deg, #28a745, #218838); border: none;"
+          [disabled]="profileForm.invalid || isLoading">
+          <i class="fas fa-save me-2"></i> Cập nhật
+        </button>
+      </form>
+
+      <div *ngIf="!profileForm?.enabled && !isLoading && errorMessage" class="alert alert-info mt-3">
+        Không thể hiển thị form cập nhật profile do lỗi tải dữ liệu.
+      </div>
+    </div>
+  </div>
+</div>

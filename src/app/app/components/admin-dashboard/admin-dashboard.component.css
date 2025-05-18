@@ -1,29 +1,251 @@
-.admin-dashboard-container {
-    background-color: #1a1a2e; /* Màu nền tối */
-    color: #ffffff; /* Màu chữ sáng */
-    padding: 20px;
+/* Biến màu cho Admin Dashboard (ghi đè hoặc bổ sung nếu cần) */
+:root {
+  --admin-bg-dark: #1e293b; /* Nền chính tối hơn */
+  --admin-bg-light: #2c3a4f; /* Nền phụ, nền thẻ */
+  --admin-primary-color: #3b82f6; /* Xanh dương cho admin */
+  --admin-accent-color: #10b981;  /* Xanh lá cây cho thành công, nhấn */
+  --admin-text-primary: #e2e8f0;  /* Màu chữ chính trên nền tối */
+  --admin-text-secondary: #94a3b8;/* Màu chữ phụ */
+  --admin-border-color: #3e4c60;
+  --admin-sidebar-width: 260px;
 }
 
-.dashboard-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Bố cục lưới linh hoạt */
-    gap: 20px; /* Khoảng cách giữa các thẻ */
-    margin-top: 20px;
+.admin-dashboard-container {
+  background-color: var(--admin-bg-dark);
+  color: var(--admin-text-primary);
+  min-height: 100vh; /* Đảm bảo dashboard chiếm toàn bộ chiều cao */
+  display: flex;
+  flex-direction: column; /* Header ở trên, main content ở dưới */
+}
+
+.dashboard-header {
+    background-color: var(--admin-bg-light);
+    padding: 15px 30px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.dashboard-title {
+    font-size: 1.8rem;
+    color: var(--admin-text-primary);
+    margin: 0;
+}
+
+.dashboard-main-content {
+  display: flex;
+  flex-grow: 1; /* Cho phép nội dung chính chiếm không gian còn lại */
+}
+
+/* Sidebar */
+.admin-sidebar {
+  width: var(--admin-sidebar-width);
+  background-color: var(--admin-bg-light);
+  padding: 20px 0;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease; /* Cho phép thu gọn sidebar nếu muốn */
+}
+
+.admin-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-menu li a {
+  display: flex;
+  align-items: center;
+  padding: 15px 25px;
+  color: var(--admin-text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-left: 4px solid transparent; /* Đường kẻ cho active link */
+  transition: background-color 0.2s ease, color 0.2s ease, border-left-color 0.2s ease;
+}
+
+.admin-menu li a i {
+  margin-right: 15px;
+  font-size: 1.1em;
+  width: 20px; /* Đảm bảo các icon thẳng hàng */
+  text-align: center;
+}
+
+.admin-menu li a:hover {
+  background-color: var(--admin-bg-dark);
+  color: var(--admin-text-primary);
+  text-decoration: none;
+}
+
+.admin-menu li a.active {
+  background-color: var(--admin-bg-dark); /* Hoặc một màu nhấn nhẹ */
+  color: var(--admin-text-primary); /* Hoặc var(--admin-primary-color) */
+  font-weight: 600;
+  border-left-color: var(--admin-primary-color);
+}
+.admin-menu li a.active i {
+    color: var(--admin-primary-color);
+}
+
+
+/* Dashboard Content Area */
+.dashboard-content-area {
+  flex-grow: 1;
+  padding: 30px;
+  overflow-y: auto; /* Cho phép cuộn nếu nội dung dài */
+}
+
+.section-title-admin {
+  font-size: 1.7rem;
+  color: var(--admin-text-primary);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--admin-border-color);
+}
+
+/* Stats Overview / Info Cards */
+.stats-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
 }
 
 .info-card {
-    background-color: #16213e; /* Màu nền thẻ tối hơn */
-    border-radius: 8px;
+  background-color: var(--admin-bg-light);
+  border-radius: var(--border-radius);
+  padding: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.info-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  padding: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px; /* Fixed width */
+  height: 60px; /* Fixed height */
+}
+
+.users-card .card-icon { background-color: rgba(59, 130, 246, 0.2); color: #3b82f6; } /* Blue */
+.bookings-card .card-icon { background-color: rgba(245, 158, 11, 0.2); color: #f59e0b; } /* Amber */
+.revenue-card .card-icon { background-color: rgba(16, 185, 129, 0.2); color: #10b981; } /* Emerald */
+.services-card .card-icon { background-color: rgba(139, 92, 246, 0.2); color: #8b5cf6; } /* Violet */
+
+
+.card-content h3 {
+  color: var(--admin-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--admin-text-primary);
+  margin: 0;
+}
+.stat-main { /* Dùng cho text thay vì số */
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--admin-text-primary);
+    margin: 0 0 5px 0;
+}
+.stat-sub {
+    font-size: 0.9rem;
+    color: var(--admin-text-secondary);
+}
+
+.stat-change {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.stat-change i {
+    margin-right: 3px;
+}
+.stat-change.positive { color: var(--admin-accent-color); } /* Emerald */
+.stat-change.negative { color: #ef4444; } /* Red */
+.stat-change.neutral { color: var(--admin-text-secondary); }
+
+/* Recent Activity Placeholder */
+.activity-placeholder {
+    background-color: var(--admin-bg-light);
+    padding: 40px;
+    text-align: center;
+    border-radius: var(--border-radius);
+    color: var(--admin-text-secondary);
+}
+
+/* Responsive Admin Dashboard */
+@media (max-width: 992px) {
+  .admin-sidebar {
+    /* Có thể ẩn sidebar hoặc làm cho nó hẹp hơn trên tablet */
+    width: 220px;
+  }
+  .admin-menu li a {
+    padding: 12px 18px;
+  }
+  .admin-menu li a i {
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-main-content {
+    flex-direction: column; /* Sidebar ở trên content area trên mobile */
+  }
+  .admin-sidebar {
+    width: 100%; /* Sidebar chiếm toàn bộ chiều rộng */
+    height: auto;
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .admin-menu ul {
+    display: flex; /* Menu ngang trên mobile */
+    overflow-x: auto; /* Cho phép cuộn ngang nếu nhiều mục */
+    justify-content: flex-start; /* Hoặc space-around */
+  }
+  .admin-menu li {
+      flex-shrink: 0; /* Ngăn các mục bị co lại */
+  }
+  .admin-menu li a {
+    border-left: none; /* Bỏ border trái */
+    border-bottom: 4px solid transparent; /* Chuyển border xuống dưới */
+    padding: 15px;
+    font-size: 0.9rem;
+  }
+  .admin-menu li a i {
+    margin-right: 8px;
+    font-size: 1em;
+  }
+  .admin-menu li a.active {
+    border-left-color: transparent;
+    border-bottom-color: var(--admin-primary-color);
+  }
+
+  .dashboard-content-area {
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Đổ bóng nhẹ */
-}
-
-.info-card h3 {
-    color: #e94560; /* Màu tiêu đề */
-    margin-top: 0;
-}
-
-.info-card p {
-    font-size: 1.5em;
-    font-weight: bold;
+  }
+  .stats-overview {
+    grid-template-columns: 1fr; /* Một cột trên mobile */
+  }
+  .info-card {
+    padding: 20px;
+  }
+  .stat-number {
+    font-size: 1.8rem;
+  }
 }

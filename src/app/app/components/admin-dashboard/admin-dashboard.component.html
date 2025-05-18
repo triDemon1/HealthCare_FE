@@ -1,58 +1,100 @@
 <div class="admin-dashboard-container">
-    <h2>Admin Dashboard</h2>
-  
-    <!-- Menu điều hướng -->
-    <div class="admin-menu">
-      <nav>
+  <header class="dashboard-header">
+    <h1 class="dashboard-title">Admin Dashboard</h1>
+    </header>
+
+  <div class="dashboard-main-content">
+    <aside class="admin-sidebar">
+      <div class="sidebar-logo text-center">
+        <img src="/assets/images/admin-logo.png" alt="Admin Logo" style="max-width: 150px; margin-bottom: 20px;">
+      </div>
+      <nav class="admin-menu">
         <ul>
-          <li><a href="/admin/users" routerLinkActive="active">Quản lý Tài khoản</a></li>
-          <li><a href="/admin/bookings" routerLinkActive="active">Quản lý Lịch đặt</a></li>
-          <li><a href="/admin/orders" routerLinkActive="active">Quản lý Đơn hàng</a></li>
-          <li><a href="/admin/products" routerLinkActive="active">Quản lý Sản phẩm</a></li>
-          <li><a href="/admin/services" routerLinkActive="active">Quản lý Dịch vụ</a></li>
+          <li>
+            <a routerLink="/admin/dashboard-overview" routerLinkActive="active">
+              <i class="fas fa-tachometer-alt"></i> Tổng quan
+            </a>
+          </li>
+          <li>
+            <a routerLink="/admin/users" routerLinkActive="active">
+              <i class="fas fa-users"></i> Quản lý Tài khoản
+            </a>
+          </li>
+          <li>
+            <a routerLink="/admin/bookings" routerLinkActive="active">
+              <i class="fas fa-calendar-alt"></i> Quản lý Lịch đặt
+            </a>
+          </li>
+          <li>
+            <a routerLink="/admin/orders" routerLinkActive="active">
+              <i class="fas fa-shopping-cart"></i> Quản lý Đơn hàng
+            </a>
+          </li>
+          <li>
+            <a routerLink="/admin/products" routerLinkActive="active">
+              <i class="fas fa-box-open"></i> Quản lý Sản phẩm
+            </a>
+          </li>
+          <li>
+            <a routerLink="/admin/services" routerLinkActive="active">
+              <i class="fas fa-concierge-bell"></i> Quản lý Dịch vụ
+            </a>
+          </li>
+          <li>
+            <a routerLink="/admin/settings" routerLinkActive="active">
+              <i class="fas fa-cog"></i> Cài đặt
+            </a>
+          </li>
         </ul>
       </nav>
-    </div>
-  
-    <!-- Dashboard hiển thị số liệu -->
-    <div class="dashboard-content">
-  
-      <div class="info-card">
-        <div class="card-header">
-          <i class="fas fa-users"></i>
-          <h3>Người dùng</h3>
+    </aside>
+
+    <main class="dashboard-content-area">
+      <section class="stats-overview">
+        <div class="info-card users-card">
+          <div class="card-icon"><i class="fas fa-users"></i></div>
+          <div class="card-content">
+            <h3>Tổng số người dùng</h3>
+            <p class="stat-number">1.500</p>
+            <span class="stat-change positive"><i class="fas fa-arrow-up"></i> +5% so với tháng trước</span>
+          </div>
         </div>
-        <p>1.500</p>
-        <span>+5% so với tháng trước</span>
-      </div>
-  
-      <div class="info-card">
-        <div class="card-header">
-          <i class="fas fa-calendar-check"></i>
-          <h3>Lịch đặt hôm nay</h3>
+
+        <div class="info-card bookings-card">
+          <div class="card-icon"><i class="fas fa-calendar-check"></i></div>
+          <div class="card-content">
+            <h3>Lịch đặt hôm nay</h3>
+            <p class="stat-number">50</p>
+            <span class="stat-change neutral"><i class="fas fa-plus"></i> +3 hôm nay</span>
+          </div>
         </div>
-        <p>50</p>
-        <span>+3 hôm nay</span>
-      </div>
-  
-      <div class="info-card">
-        <div class="card-header">
-          <i class="fas fa-dollar-sign"></i>
-          <h3>Doanh thu</h3>
+
+        <div class="info-card revenue-card">
+          <div class="card-icon"><i class="fas fa-dollar-sign"></i></div>
+          <div class="card-content">
+            <h3>Doanh thu tháng</h3>
+            <p class="stat-number">$10.000</p>
+            <span class="stat-change positive"><i class="fas fa-chart-line"></i> Tăng trưởng 12%</span>
+          </div>
         </div>
-        <p>$10.000</p>
-        <span>Tăng trưởng 12%</span>
-      </div>
-  
-      <div class="info-card">
-        <div class="card-header">
-          <i class="fas fa-star"></i>
-          <h3>Dịch vụ nổi bật</h3>
+
+        <div class="info-card services-card">
+          <div class="card-icon"><i class="fas fa-star"></i></div>
+          <div class="card-content">
+            <h3>Dịch vụ nổi bật</h3>
+            <p class="stat-main">Tư vấn sức khỏe</p>
+            <span class="stat-sub">120 lượt đặt</span>
+          </div>
         </div>
-        <p>Tư vấn</p>
-        <span>120 lượt đặt</span>
-      </div>
-  
-    </div>
+      </section>
+
+      <section class="recent-activity">
+        <h2 class="section-title-admin">Hoạt động gần đây</h2>
+        <div class="activity-placeholder">
+            <p>Chưa có hoạt động nào gần đây.</p>
+        </div>
+      </section>
+
+    </main>
   </div>
-  
+</div>
